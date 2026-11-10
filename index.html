@@ -1,0 +1,1564 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Investing 101 Simple</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet">
+<style>:root{
+  --page:#dfe3e5;--bg:#f4f6f6;--card:#fff;--line:#dce2e4;
+  --ink:#16262b;--mut:#56676d;--dim:#8a979c;
+  --tea:#0e7c7a;--tea2:#3aa6a2;--teabg:#e2f0ef;
+  --blu:#5b7f9c;--rst:#c0573e;--gry:#9aa7ab;
+  --serif:"Source Serif 4",Georgia,serif;--sans:"Inter",-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#e9eeee;color:var(--ink);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+
+/* living background: soft teal light that drifts and follows the deck */
+#bg{position:fixed;inset:0;overflow:hidden;background:radial-gradient(120% 90% at 50% 120%,#d9ecea 0%,#eef2f2 55%,#f5f7f7 100%)}
+#bg i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;will-change:transform;transition:transform 2.4s var(--ease)}
+#bg .b1{width:62vw;height:62vw;left:-14vw;top:-26vw;background:radial-gradient(circle,#bfe3df,transparent 68%);transform:translate(calc(var(--p,0)*18vw + var(--mx,0)*-14px),calc(var(--p,0)*10vh + var(--my,0)*-14px));animation:drift1 26s ease-in-out infinite alternate}
+#bg .b2{width:52vw;height:52vw;right:-16vw;bottom:-24vw;background:radial-gradient(circle,#9fd5cf,transparent 66%);transform:translate(calc(var(--p,0)*-16vw + var(--mx,0)*10px),calc(var(--p,0)*-8vh + var(--my,0)*10px));animation:drift2 32s ease-in-out infinite alternate}
+#bg .b3{width:34vw;height:34vw;left:44vw;top:30vh;background:radial-gradient(circle,#dfe7e8,transparent 70%);opacity:.8;animation:drift1 40s ease-in-out infinite alternate-reverse}
+@keyframes drift1{to{margin-left:5vw;margin-top:4vh}}
+@keyframes drift2{to{margin-right:6vw;margin-bottom:-5vh}}
+#grain{position:fixed;inset:-50%;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;perspective:2200px}
+.slide{position:absolute;inset:0;padding:84px 120px 116px;display:flex;flex-direction:column;gap:36px;opacity:0;visibility:hidden;transform:translateZ(-380px) rotateX(4deg);filter:blur(12px);
+  transition:opacity .7s var(--ease),transform 1.1s var(--ease),filter .8s var(--ease),visibility 0s linear 1.1s}
+.slide.active{opacity:1;visibility:visible;transform:none;filter:none;transition:opacity .8s var(--ease) .08s,transform 1.2s var(--ease) .04s,filter .9s var(--ease) .06s,visibility 0s}
+.slide.leaving{opacity:0;visibility:visible;transform:translateZ(260px);filter:blur(14px);transition:opacity .6s var(--ease),transform 1s var(--ease),filter .7s var(--ease),visibility 0s linear 1s}
+#stage.back .slide.leaving{transform:translateZ(-380px)}
+
+/* entrance */
+.fx{opacity:0;transform:translateY(26px);filter:blur(6px)}
+.active .fx{animation:up .9s var(--ease) both;animation-delay:calc(var(--d,0s) + .25s)}
+@keyframes up{to{opacity:1;transform:none;filter:none}}
+.card.fx{transform:translateY(34px) rotateX(8deg) scale(.98);transform-origin:50% 100%}
+
+/* headline letters rise out of a mask */
+.split .wd{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .02em .14em;margin-bottom:-.14em}
+.split .lt{display:inline-block;transform:translateY(105%);opacity:0}
+.active .split .lt{animation:chIn .9s var(--ease) both;animation-delay:calc(.12s + var(--i)*16ms)}
+@keyframes chIn{to{transform:none;opacity:1}}
+h1 em,h2 em{font-style:italic;font-weight:500;color:var(--tea)}
+.gr,.grd{transform:scaleY(0);transform-origin:50% 100%;transform-box:fill-box}
+.grd{transform-origin:50% 0}
+.active .gr,.active .grd{animation:grow .8s var(--ease) both;animation-delay:var(--d,0s)}
+@keyframes grow{to{transform:none}}
+.draw{stroke-dasharray:1;stroke-dashoffset:1}
+.active .draw{animation:draw 1.6s var(--ease) both;animation-delay:var(--d,0s)}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* type */
+.hd{flex:none}
+.kicker,.kk,.ch{font-size:17px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tea)}
+.kk{display:block;font-size:15px;color:var(--mut)}
+.kk.tea{color:var(--tea)}
+.hd h2{font-family:var(--serif);font-weight:600;font-size:76px;line-height:1.04;letter-spacing:-.01em;margin:14px 0 0}
+.sub{font-size:28px;color:var(--mut);margin:14px 0 0;line-height:1.35}
+.bd{flex:1;min-height:0;display:grid;gap:28px}
+.ft{position:absolute;left:120px;right:120px;bottom:40px;display:flex;justify-content:space-between;align-items:flex-end;gap:40px;font-size:16px;color:var(--dim);border-top:1px solid var(--line);padding-top:14px}
+.ft .src{flex:1;font-size:15px;line-height:1.35;color:var(--dim)}
+.ft span:last-child{white-space:nowrap}
+.card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.66));border:1px solid rgba(255,255,255,.95);border-radius:20px;padding:28px 32px;
+  -webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 0 0 1px rgba(14,90,88,.07),0 2px 4px rgba(14,60,62,.04),0 24px 48px -28px rgba(14,60,62,.32);
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.card:hover{transform:translateY(-4px);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 0 0 1px rgba(14,90,88,.1),0 4px 8px rgba(14,60,62,.05),0 34px 60px -30px rgba(14,60,62,.4)}
+.card.hi{background:linear-gradient(160deg,rgba(255,255,255,.92),rgba(226,242,240,.82));box-shadow:0 0 0 1.5px var(--tea),0 1px 0 rgba(255,255,255,.9) inset,0 28px 56px -26px rgba(14,124,122,.5)}
+.card p{margin:0}
+.card .ch{margin-bottom:12px}
+.card p,.lead{font-size:27px;line-height:1.4;color:var(--ink)}
+b{font-weight:700}
+.lead b,.card p b{color:var(--tea)}
+.lead{font-size:32px;margin:0}
+.dn,.rs{color:var(--rst)!important}
+.up{color:var(--tea)}
+.ic{width:34px;height:34px;flex:none;fill:none;stroke:var(--tea);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ic.no{stroke:var(--gry)}
+.lcol{display:flex;flex-direction:column;gap:22px;min-height:0}
+.side{display:flex;flex-direction:column;gap:18px}
+.call{padding:22px 28px}
+.call>b{display:block;font-size:52px;font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--ink);margin-top:6px}
+.call>b.g{color:var(--mut)}
+.call>span:not(.kk),.call>p+span{display:block;font-size:22px;color:var(--mut);line-height:1.35;margin-top:4px}
+.call strong{color:var(--ink)}
+.call .t{font-size:28px;font-weight:600;margin-top:6px}
+.band{display:flex;align-items:center;gap:20px;padding:22px 30px;border-radius:12px;background:var(--teabg);color:var(--ink);font-size:30px;font-weight:500}
+.band b{color:var(--tea)}
+.band.sm{display:block;font-size:24px;padding:18px 24px;line-height:1.4}
+svg .lead{stroke:var(--gry);stroke-width:1.2;stroke-dasharray:3 4}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.st{padding:20px 28px}
+.st b{display:block;font-size:46px;font-weight:800;letter-spacing:-.03em;margin:4px 0 2px}
+.st span:last-child{font-size:20px;color:var(--mut)}
+.plot{padding:20px 22px;min-height:0;display:flex;flex-direction:column}
+.plot svg{flex:1;min-height:0;width:100%;display:block}
+svg .grid{stroke:var(--line);stroke-width:1.5}
+svg .ax{font-family:var(--sans);font-size:17px;fill:var(--dim)}
+svg .vl{font-family:var(--sans);font-size:22px;font-weight:700;fill:var(--ink)}
+svg .kk2{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;fill:var(--tea)}
+svg .an{font-family:var(--sans);font-size:19px;font-weight:700;fill:var(--ink)}
+svg .an.rs{fill:var(--rst)}
+svg .an2{font-family:var(--sans);font-size:17px;fill:var(--mut)}
+.ln{fill:none;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
+.ln.tea{stroke:var(--tea)}.ln.gry{stroke:var(--gry)}.ln.blu{stroke:var(--blu)}.ln.rst{stroke:var(--rst)}
+.ln.thin{stroke-width:2.5;stroke-dasharray:none}
+.pt{fill:#fff;stroke-width:4}
+.pt.tea{stroke:var(--tea)}.pt.gry{stroke:var(--gry)}.pt.blu{stroke:var(--blu)}.pt.rst{stroke:var(--rst)}
+.area{fill:var(--tea);opacity:.08}
+.ref{stroke:var(--gry);stroke-width:1.5;stroke-dasharray:6 8}
+
+/* 1 title */
+.s-title{flex-direction:row;align-items:center;gap:60px;padding:0 120px}
+.s-title .tl{flex:1}
+.s-title h1{font-family:var(--serif);font-weight:600;font-size:170px;line-height:1;letter-spacing:-.02em;margin:24px 0 0}
+.s-title .sub{font-size:34px;margin-top:24px}
+.s-title .handle{display:inline-flex;align-items:center;gap:14px;margin-top:48px;padding:14px 24px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:28px;font-weight:600}
+.s-title .handle svg{width:30px;height:30px;fill:none;stroke:var(--tea);stroke-width:1.8}
+.s-title .handle .dt{fill:var(--tea);stroke:none}
+.s-title .tg{width:760px;margin:0;padding:28px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.s-title .tg svg{width:100%;display:block}
+.s-title .tg figcaption{font-size:18px;color:var(--mut);margin-top:10px}
+.tline{fill:none;stroke:var(--tea);stroke-width:4;stroke-linejoin:round}
+.tarea{fill:var(--tea);opacity:.08}
+
+/* 2 disclaimer */
+.s-disc .bd{grid-template-rows:auto 1fr auto}
+.s-disc blockquote{margin:0;padding:6px 0 6px 34px;border-left:4px solid var(--tea);font-family:var(--serif);font-size:34px;line-height:1.42;color:var(--ink)}
+.s-disc .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px 56px;align-content:start;padding-top:8px}
+.s-disc .dgrid p{margin:0;font-size:23px;line-height:1.45;color:var(--mut)}
+.s-disc .dgrid b{color:var(--ink)}
+
+/* 3 scope */
+.s-scope .bd{grid-template-columns:1fr 1fr;align-items:start}
+.s-scope .col{padding:36px 40px}
+.s-scope .ch.no{color:var(--mut)}
+.s-scope ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:24px}
+.s-scope li{display:flex;gap:18px;align-items:flex-start;font-size:31px;line-height:1.3}
+.s-scope li .ic{width:38px;height:38px;margin-top:0}
+
+/* 4 market */
+.s-mkt .bd{grid-template-rows:auto 1fr}
+.s-mkt .row{display:grid;grid-template-columns:1.45fr 1fr;gap:28px;min-height:0}
+.s-mkt .flow{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;align-items:center;gap:8px;align-content:center}
+.s-mkt .node{border:1px solid var(--line);border-radius:10px;padding:22px 18px;text-align:center;background:var(--bg)}
+.s-mkt .node.mid{background:var(--teabg);border-color:var(--tea2)}
+.s-mkt .node b{display:block;font-size:28px}
+.s-mkt .node span{display:block;font-size:19px;color:var(--mut);margin-top:8px;line-height:1.35}
+.s-mkt .arr{width:70px;fill:none;stroke:var(--tea);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.s-mkt .flow .note{grid-column:1/-1;font-size:23px;color:var(--mut);margin-top:26px;text-align:center}
+.s-mkt .idx p{font-size:23px;color:var(--mut);margin-bottom:18px}
+.s-mkt .ir{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:16px 0;border-top:1px solid var(--line)}
+.s-mkt .ir b{font-size:26px}
+.s-mkt .ir span{font-size:21px;color:var(--mut);text-align:right}
+
+/* 5 moves */
+.s-moves .bd{grid-template-rows:1fr auto}
+.s-moves .grid6{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:20px}
+.s-moves .mv{display:flex;flex-direction:column;gap:8px}
+.s-moves .mv .ic{width:40px;height:40px;margin-bottom:6px}
+.s-moves .mv b{font-size:29px}
+.s-moves .mv span{font-size:21px;color:var(--mut);line-height:1.4}
+.s-moves .band{justify-content:center;gap:40px}
+.s-moves .band>div{display:flex;align-items:baseline;gap:16px}
+.s-moves .band .kk{color:var(--tea)}
+.s-moves .vs{width:1px;height:40px;background:var(--tea2)}
+
+/* 6 forty years */
+.s-forty .bd{grid-template-columns:1fr 360px}
+.s-forty .stats{grid-template-columns:1fr;align-content:start;gap:18px}
+.b6.up{fill:var(--tea)}.b6.dn{fill:var(--rst)}
+
+/* 7 stand */
+.s-stand .bd{grid-template-columns:1fr 440px}
+.s-stand .chartc{display:flex;flex-direction:column;padding:26px 32px 18px}
+.s-stand .legend{display:flex;gap:34px;font-size:21px;color:var(--mut)}
+.s-stand .legend span{display:flex;align-items:center;gap:10px}
+.s-stand .legend i{width:16px;height:16px;border-radius:3px;display:block}
+.s-stand i.debt{background:var(--rst)}
+.s-stand i.save{background:var(--tea)}
+.s-stand .bars{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:end;border-bottom:1.5px solid var(--line);margin-top:10px;padding-bottom:0}
+.s-stand .grp{position:relative}
+.s-stand .pair{display:flex;gap:10px;justify-content:center;align-items:flex-end}
+.s-stand .bc{display:flex;flex-direction:column;align-items:center;width:84px}
+.s-stand .bc span{font-size:22px;font-weight:700;margin-bottom:8px;white-space:nowrap}
+.s-stand .bc i{display:block;width:100%;border-radius:4px 4px 0 0}
+.s-stand .gl{position:absolute;left:0;right:0;bottom:-40px;text-align:center;font-size:19px;font-weight:600;color:var(--mut)}
+.s-stand .chartc::after{content:"";height:40px}
+.s-stand .call>b{font-size:46px}
+
+/* 8 inflation */
+.s-infl .bd{grid-template-columns:1fr 1fr;grid-template-rows:1fr auto}
+.s-infl .lcol .card{flex:1}
+.s-infl .pp{display:flex;flex-direction:column}
+.s-infl .hint{font-size:20px!important;color:var(--mut)!important}
+.s-infl .hint b{color:var(--ink)!important}
+.s-infl .ibars{flex:1;display:flex;align-items:flex-end;gap:16px;margin:12px 0}
+.s-infl .ib{flex:1;display:flex;flex-direction:column;align-items:center}
+.s-infl .ib span{font-size:24px;font-weight:800;margin-bottom:6px}
+.s-infl .ib i{display:block;width:100%;background:var(--tea);border-radius:4px 4px 0 0;opacity:.85}
+.s-infl .ib em{font-style:normal;font-size:17px;color:var(--mut);margin-top:8px;font-weight:600}
+.s-infl .moves{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.s-infl .moves .ch{grid-column:1/-1;margin-bottom:-6px}
+.s-infl .mvs{padding:16px 20px}
+.s-infl .mvs b{display:block;font-size:22px}
+.s-infl .mvs span{display:block;font-size:18px;color:var(--mut);margin-top:4px;line-height:1.35}
+
+/* 9 compound */
+.s-comp .bd{grid-template-columns:1fr 420px}
+
+/* 10 dca */
+.s-dca .bd{grid-template-columns:1fr 1fr}
+.s-dca .tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.s-dca .tl{padding:16px 24px}
+.s-dca .tl b{display:block;font-size:44px;font-weight:800;letter-spacing:-.03em;margin-top:2px}
+.s-dca .tl.hi b{color:var(--tea)}
+.sb{fill:var(--teabg);stroke:var(--tea);stroke-width:2}
+
+/* 11 dca years */
+.s-dca2 .bd{grid-template-rows:auto 1fr}
+.s-dca2 .st{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:16px}
+.s-dca2 .st .kk{flex-basis:100%}
+.s-dca2 .st b{font-size:42px}
+.s-dca2 .st.hi b{color:var(--tea)}
+
+/* 12 diversification */
+.s-div .bd{grid-template-columns:1.15fr 1fr}
+.s-div .lcol .card{flex:1}
+.dots{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.dots li{position:relative;padding-left:26px;font-size:25px;color:var(--mut);line-height:1.35}
+.dots li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;height:9px;border-radius:50%;background:var(--tea)}
+.dots b{color:var(--ink)}
+.s-div .yr{display:flex;flex-direction:column}
+.s-div .dv{position:relative;flex:1;display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:6px}
+.s-div .dv .zero{position:absolute;left:0;right:0;top:110px;border-top:1.5px solid var(--gry)}
+.s-div .dv .c{display:flex;flex-direction:column;align-items:center}
+.s-div .dv .c:first-child{justify-content:flex-start;padding-top:30px}
+.s-div .dv .c:first-child i{margin-top:6px}
+.s-div .dv i{display:block;width:44%;border-radius:3px}
+.s-div .dv i.up{background:var(--tea)}
+.s-div .dv i.dn{background:var(--rst);margin-top:0}
+.s-div .dv .c:last-child{padding-top:80px}
+.s-div .dv .c:last-child em.t{height:30px}
+.s-div .dv em{font-style:normal;font-size:17px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-top:10px}
+.s-div .dv .v{font-size:40px;font-weight:800;letter-spacing:-.03em}
+.s-div .dv .c:last-child .v{margin-top:8px}
+.s-div .dec{border-top:1px solid var(--line);padding-top:18px}
+.s-div .r2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.s-div .r2 b{display:block;font-size:44px;font-weight:800;letter-spacing:-.03em}
+.s-div .r2 span{font-size:19px;color:var(--mut)}
+
+/* 13 allocation */
+.s-alloc .bd{grid-template-columns:1.15fr 1fr}
+.s-alloc .kd{display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:center;flex:1;padding:20px 28px}
+.s-alloc .kd>b{font-size:32px;font-family:var(--serif)}
+.s-alloc .kd p{font-size:20px;color:var(--mut)}
+.s-alloc .kd p.t{font-size:25px;color:var(--ink);margin-bottom:4px}
+.s-alloc b.stk{color:var(--tea)}.s-alloc b.bnd{color:var(--blu)}.s-alloc b.csh{color:var(--mut)}
+.s-alloc .mixes{display:flex;flex-direction:column}
+.s-alloc .key{display:flex;gap:24px;font-size:19px;color:var(--mut)}
+.s-alloc .key span{display:flex;align-items:center;gap:8px}
+.s-alloc .key i{width:14px;height:14px;border-radius:3px}
+.s-alloc .key i.stk{background:var(--tea)}.s-alloc .key i.bnd{background:var(--blu)}.s-alloc .key i.csh{background:#c9d1d4}
+.s-alloc .dns{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:center;text-align:center}
+.s-alloc .dns svg{width:180px;height:180px}
+.s-alloc .dns b{display:block;font-size:24px;margin-top:8px}
+.s-alloc .dns span{display:block;font-size:17px;color:var(--mut);margin-top:4px}
+.seg{fill:none;stroke-width:26}
+.seg.stk{stroke:var(--tea)}.seg.bnd{stroke:var(--blu)}.seg.csh{stroke:#c9d1d4}
+.dc{font-family:var(--sans);font-size:30px;font-weight:800;fill:var(--ink)}
+
+/* 14 risk */
+.s-risk .bd{grid-template-columns:1.2fr 1fr}
+.s-risk .ask .q{font-size:40px;font-weight:600;line-height:1.25;margin:6px 0 0;color:var(--ink)}
+.s-risk .ask .q b{color:var(--ink)}
+.s-risk .opts{display:flex;gap:14px;margin-top:26px}
+.s-risk .opts span{font-size:24px;font-weight:600;padding:10px 26px;border:1.5px solid var(--line);border-radius:999px}
+.s-risk .opts span:last-child{border-color:var(--tea);color:var(--tea)}
+.s-risk .spec{padding:10px 4px}
+.s-risk .track{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,var(--blu),var(--tea),var(--rst))}
+.s-risk .track i{position:absolute;top:50%;left:50%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:#fff;border:3px solid var(--ink)}
+.s-risk .ends{display:flex;justify-content:space-between;margin-top:16px;font-size:18px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+
+/* 15 taxes */
+.s-tax .bd{grid-template-columns:1fr 1fr 1.25fr}
+.s-tax .tx{padding:26px 28px}
+.s-tax h3{font-family:var(--serif);font-weight:600;font-size:40px;margin:4px 0 0}
+.s-tax .ex{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.s-tax .ex span{font-size:18px;padding:6px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--line)}
+.s-tax .pc{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.s-tax .pc li,.s-tax .rws span{position:relative;display:block;padding-left:28px;font-size:21px;line-height:1.3}
+.s-tax .pc li::before,.s-tax .rws span::before{position:absolute;left:2px;top:-.05em;font-weight:800;font-size:1.15em}
+.s-tax .p::before{content:"+";color:var(--tea)}
+.s-tax .c::before{content:"\2212";color:var(--rst)}
+.s-tax .c{color:var(--mut)}
+.s-tax .rws{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.s-tax .rws>div{padding-bottom:10px;border-bottom:1px solid var(--line)}
+.s-tax .rws>div:last-child{border:0;padding-bottom:0}
+.s-tax .rws b{display:block;font-size:22px;margin-bottom:2px}
+
+/* 16 sequence setup */
+.s-seq .bd{grid-template-columns:1fr 420px}
+.s-seq .sp{flex:1;padding:20px 28px;display:flex;flex-direction:column}
+.s-seq .sp svg{flex:1;width:100%;margin-top:6px}
+.who{display:flex;gap:16px;align-items:center}
+.who .t{font-size:26px;font-weight:700;margin:0}
+.who span{font-size:19px;color:var(--mut)}
+.ta,.tb{width:46px;height:46px;flex:none;border-radius:8px;display:grid;place-items:center;font-size:26px;font-weight:800;color:#fff}
+.ta{background:var(--rst)}.tb{background:var(--tea)}
+.s-seq rect.up{fill:var(--tea)}.s-seq rect.dn{fill:var(--rst)}
+.s-seq .base{stroke:var(--gry);stroke-width:1.5}
+.s-seq .call>b{font-size:44px}
+
+/* 17 sequence result */
+.s-seq2 .bd{grid-template-columns:1fr 440px}
+.s-seq2 .call>b{font-size:40px;margin-top:10px}
+.s-seq2 .call .who .kk{display:inline}
+
+/* 18 plan */
+.s-plan .bd{grid-template-columns:1.3fr 1fr}
+.s-plan .quote{font-family:var(--serif);font-style:italic;font-size:38px;margin:0;color:var(--mut)}
+.s-plan .cks{display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;margin-top:8px}
+.s-plan .cks>div{display:flex;gap:14px;align-items:flex-start}
+.s-plan .cks b{display:block;font-size:24px}
+.s-plan .cks span{display:block;font-size:19px;color:var(--mut);margin-top:2px}
+.s-plan .contact{display:flex;flex-direction:column;justify-content:center;gap:28px;padding:40px 44px;border-color:var(--tea);box-shadow:inset 6px 0 0 var(--tea)}
+.s-plan .contact .t{font-size:28px;color:var(--mut)}
+.s-plan .ci{display:flex;gap:20px;align-items:center;padding-top:24px;border-top:1px solid var(--line)}
+.s-plan .ci .ic{width:46px;height:46px}
+.s-plan .ci b{display:block;font-size:44px;letter-spacing:-.01em;margin-top:2px}
+
+/* fill pass */
+.s-risk .bd{align-items:center}
+.s-risk .lcol{gap:44px}
+.s-risk .ask{padding:40px 44px}
+.s-risk .ask .q{font-size:52px}
+.s-risk .opts span{font-size:28px;padding:12px 32px}
+.s-risk .side .call{padding:30px 34px}
+.s-risk .side .call .t{font-size:34px}
+.s-risk .side .band{font-size:28px}
+.s-plan .lcol .card{flex:1;display:flex;flex-direction:column}
+.s-plan .cks{flex:1;align-content:space-evenly;gap:30px 36px}
+.s-plan .cks b{font-size:30px}
+.s-plan .cks span{font-size:22px}
+.s-plan .cks .ic{width:40px;height:40px}
+.s-plan .quote{font-size:44px}
+.s-tax h3{font-size:46px}
+.s-tax .ex span{font-size:20px}
+.s-tax .pc{gap:16px;margin-top:24px}
+.s-tax .pc li,.s-tax .rws span{font-size:24px}
+.s-tax .rws{gap:16px}
+.s-tax .rws b{font-size:25px}
+
+/* beauty layer: color depth on charts and accents */
+.b6.up,.s-seq rect.up{fill:url(#gTea)}
+.b6.dn,.s-seq rect.dn{fill:url(#gRst)}
+.area,.tarea{fill:url(#gArea);opacity:1}
+.ln.tea,.tline{stroke:url(#gLine);filter:drop-shadow(0 6px 10px rgba(14,124,122,.25))}
+.ln.rst{filter:drop-shadow(0 6px 10px rgba(192,87,62,.22))}
+.sb{fill:url(#gArea);stroke:var(--tea)}
+.s-stand i.save,.s-stand .bc i.save,.s-infl .ib i,.s-div .dv i.up{background:linear-gradient(180deg,#2fb3ae,#0b6f6d);box-shadow:0 14px 30px -14px rgba(14,124,122,.55)}
+.s-stand i.debt,.s-stand .bc i.debt,.s-div .dv i.dn{background:linear-gradient(180deg,#e08a72,#b9503a);box-shadow:0 14px 30px -14px rgba(192,87,62,.5)}
+.s-div .dv i.dn{background:linear-gradient(0deg,#e08a72,#b9503a)}
+.s-infl .ib i{opacity:1}
+.band{background:linear-gradient(100deg,rgba(14,124,122,.12),rgba(14,124,122,.04));border:1px solid rgba(14,124,122,.18);border-radius:16px}
+.kicker{display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:34px;height:2px;background:var(--tea);border-radius:2px}
+.s-title .kicker::before{display:none}
+.ta,.tb{border-radius:12px;box-shadow:0 10px 20px -10px currentColor}
+.ta{background:linear-gradient(160deg,#e08a72,#b9503a);color:#fff}
+.tb{background:linear-gradient(160deg,#2fb3ae,#0b6f6d);color:#fff}
+.call>b,.st b,.tl b{font-variant-numeric:tabular-nums}
+.s-stand .call>b,.s-forty .st.hi b,.s-comp .call.hi>b,.s-dca .tl.hi b,.s-dca2 .st.hi b,.s-seq .call.hi>b{background:linear-gradient(180deg,#139c98,#0b5f5d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.s-mkt .node{background:rgba(255,255,255,.7);border-color:rgba(14,90,88,.12);border-radius:16px}
+.s-mkt .node.mid{background:linear-gradient(160deg,#e6f4f2,#cfe9e6);border-color:rgba(14,124,122,.35);box-shadow:0 18px 36px -20px rgba(14,124,122,.5)}
+.s-mkt .arr path{stroke-dasharray:6 8;animation:flow 1.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-14}}
+.s-moves .mv .ic,.s-plan .ci .ic{padding:8px;border-radius:12px;background:var(--teabg);box-sizing:content-box}
+.s-risk .track i{box-shadow:0 0 0 8px rgba(14,124,122,.12),0 8px 18px rgba(14,60,62,.25)}
+.active .s-risk .track i,.s-risk.active .track i{animation:knob 3s var(--ease) .9s both}
+@keyframes knob{0%{left:6%}45%{left:90%}100%{left:50%}}
+.s-tax .ex span,.s-alloc .key i{border-radius:999px}
+.s-tax .ex span{background:rgba(255,255,255,.7)}
+.seg{stroke-linecap:butt}
+.s-alloc .dns svg{filter:drop-shadow(0 14px 18px rgba(14,60,62,.16))}
+
+/* title */
+.s-title h1{font-size:200px;line-height:.95;letter-spacing:-.025em}
+.s-title h1 em{font-weight:400}
+.s-title .tg{border-radius:24px;padding:30px 30px 22px;background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.6));border:1px solid #fff;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 0 0 1px rgba(14,90,88,.07),0 40px 80px -40px rgba(14,60,62,.45);position:relative}
+.s-title .tg .chip{position:absolute;padding:12px 18px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px rgba(14,90,88,.08),0 18px 36px -18px rgba(14,60,62,.45);font-size:15px;color:var(--mut)}
+.s-title .tg .chip b{display:block;font-size:30px;color:var(--ink);letter-spacing:-.02em}
+.s-title .tg .chip.c1{left:-46px;top:64px}
+.s-title .tg .chip.c2{right:-34px;bottom:92px}
+.s-title .tg .chip.c2 b{color:var(--tea)}
+.float{animation:floaty 6s ease-in-out infinite}
+@keyframes floaty{50%{translate:0 -10px}}
+.s-plan .contact{background:linear-gradient(165deg,rgba(255,255,255,.9),rgba(214,236,233,.85));box-shadow:0 0 0 1.5px var(--tea),0 40px 80px -36px rgba(14,124,122,.55)}
+
+
+/* fill pass 2 */
+.s-disc blockquote{font-size:40px;line-height:1.38}
+.s-disc .dgrid{gap:28px 64px;padding-top:20px}
+.s-disc .dgrid p{font-size:27px}
+.s-scope .bd{align-items:stretch}
+.s-scope .col{display:flex;flex-direction:column}
+.s-scope ul{flex:1;justify-content:space-evenly;gap:30px}
+.s-scope li{font-size:36px}
+.s-scope li .ic{width:44px;height:44px}
+.s-mkt .lead{font-size:38px}
+.s-mkt .node{padding:34px 22px}
+.s-mkt .node b{font-size:34px}
+.s-mkt .node span{font-size:22px}
+.s-mkt .flow .note{font-size:26px;margin-top:40px}
+.s-mkt .idx{display:flex;flex-direction:column}
+.s-mkt .idx p{font-size:26px}
+.s-mkt .ir{flex:1;align-items:center}
+.s-mkt .ir b{font-size:32px}
+.s-mkt .ir span{font-size:23px}
+
+.s-disc .nophoto{font-size:27px;gap:18px}
+.s-disc .nophoto .ic{width:38px;height:38px}
+.s-mkt .ir b{font-size:28px}
+
+.s-disc blockquote{font-size:36px}
+.s-disc .dgrid{gap:18px 60px;padding-top:6px}
+.s-disc .dgrid p{font-size:24px}
+.s-mkt .ir{flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;padding:12px 0}
+.s-mkt .ir b{font-size:27px}
+.s-mkt .ir span{text-align:left;font-size:21px}
+.s-mkt .idx p{font-size:24px;margin-bottom:8px}
+
+/* interactive S&P chart */
+.s-forty .int{cursor:default}
+.s-forty .ctop{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.s-forty .ctop .ch{margin:0}
+.s-forty .zoom{display:flex;align-items:center;gap:6px;padding:5px;border-radius:999px;background:rgba(14,90,88,.06);box-shadow:inset 0 0 0 1px rgba(14,90,88,.08)}
+.s-forty .zoom span{font-size:15px;font-weight:600;color:var(--mut);padding:0 10px 0 12px}
+.s-forty .zoom button{font:600 17px var(--sans);color:var(--mut);background:transparent;border:0;border-radius:999px;padding:9px 18px;cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease),box-shadow .3s var(--ease)}
+.s-forty .zoom button:hover{color:var(--ink);background:rgba(255,255,255,.8)}
+.s-forty .zoom button.on{color:#fff;background:linear-gradient(160deg,#2fb3ae,#0b6f6d);box-shadow:0 8px 18px -8px rgba(14,124,122,.7)}
+.s-forty .spwrap{position:relative;flex:1;min-height:0;margin-top:6px}
+.s-forty .spwrap svg{position:absolute;inset:0;width:100%;height:100%}
+.s-forty svg .grid.zero{stroke:var(--gry)}
+.s-forty .b6{transition:opacity .25s ease}
+.s-forty .b6.dim{opacity:.32}
+.s-forty .guide{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:4 5;opacity:0;transition:opacity .2s}
+.s-forty .guide.on{opacity:.5}
+.s-forty .fade{opacity:0}
+.active .s-forty .fade,.s-forty.active .fade{animation:fadeIn .6s var(--ease) .7s both}
+@keyframes fadeIn{to{opacity:1}}
+#sptip{position:absolute;top:0;transform:translate(-50%,-6px);pointer-events:none;opacity:0;padding:10px 16px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px rgba(14,90,88,.1),0 16px 30px -14px rgba(14,60,62,.45);display:flex;gap:12px;align-items:baseline;white-space:nowrap;transition:opacity .2s,left .12s var(--ease)}
+#sptip.on{opacity:1}
+#sptip b{font-size:22px}
+#sptip span{font-size:22px;font-weight:800}
+.s-forty .st b.pop{animation:numPop .6s var(--ease)}
+@keyframes numPop{0%{opacity:.2;transform:translateY(8px)}100%{opacity:1;transform:none}}
+
+.s-mkt .idx .ttl{font-family:var(--serif);font-weight:600;font-size:36px;line-height:1.1;margin:0 0 6px;color:var(--ink)}
+
+.s-mkt .ir b small{font-size:20px;font-weight:500;color:var(--mut)}
+
+.s-forty .stats{gap:14px}
+.s-forty .st{padding:14px 24px}
+.s-forty .st b{font-size:38px;margin:2px 0 0}
+.s-forty .st span:last-child{font-size:18px}
+
+#spavg{white-space:nowrap}
+
+/* up or down: titles only */
+.s-moves .bd{grid-template-rows:1fr auto}
+.s-moves .grid8{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:22px}
+.s-moves .grid8 .mv{justify-content:center;gap:14px;padding:30px 32px}
+.s-moves .grid8 .mv .ic{width:46px;height:46px}
+.s-moves .grid8 .mv b{font-size:34px;line-height:1.15;letter-spacing:-.01em}
+.s-moves .grid8 .mv span{font-size:24px;color:var(--tea);font-weight:600}
+
+/* anything and everything */
+.s-any{align-items:center;justify-content:center}
+.s-any .anyc{position:relative;z-index:2;text-align:center}
+.s-any .kicker{justify-content:center}
+.s-any .pre{font-family:var(--serif);font-style:italic;font-size:66px;color:var(--mut);margin:28px 0 0}
+.s-any h2.mega{font-family:var(--serif);font-weight:600;font-size:196px;line-height:.98;letter-spacing:-.025em;margin:4px 0 0}
+.s-any h2.mega em{color:var(--tea);text-shadow:0 18px 40px rgba(14,124,122,.22)}
+@keyframes sheen{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+.s-any .glow{position:absolute;left:50%;top:50%;width:1300px;height:760px;translate:-50% -50%;background:radial-gradient(closest-side,rgba(47,179,174,.24),transparent);animation:breathe2 6s ease-in-out infinite}
+@keyframes breathe2{50%{opacity:.55;scale:1.08}}
+.s-any .cloud{position:absolute;inset:0}
+.s-any .chipx{position:absolute;left:var(--x);top:var(--y);translate:-50% -50%}
+.s-any .chipx span{display:inline-block;padding:12px 24px;border-radius:999px;background:#fbfdfd;box-shadow:0 0 0 1px rgba(14,90,88,.1),0 14px 30px -16px rgba(14,60,62,.4);font-size:23px;will-change:transform;font-weight:600;color:var(--mut);white-space:nowrap;animation:bob 7s ease-in-out infinite}
+.s-any .chipx span.k{background:linear-gradient(160deg,#2fb3ae,#0b6f6d);color:#fff;font-size:26px;box-shadow:0 16px 32px -14px rgba(14,124,122,.6)}
+@keyframes bob{50%{transform:translateY(-12px) rotate(-1deg)}}
+
+/* debt clocks: national debt as the hero, two below, then the comparison */
+.s-debt .bd{grid-template-rows:1fr auto}
+.s-debt .clocks{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1.15fr 1fr;gap:20px}
+.s-debt .clock{display:flex;flex-direction:column;justify-content:center;gap:12px;padding:24px 32px}
+.s-debt .clock:first-child{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;gap:30px}
+.s-debt .clock:first-child>div{display:flex;flex-direction:column;gap:12px}
+.s-debt .cl{align-self:flex-start;font-size:17px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:linear-gradient(160deg,#d0705a,#a9452f);padding:8px 16px;border-radius:999px}
+.s-debt .tick{font-size:52px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--rst);padding:12px 20px;border-radius:14px;background:rgba(192,87,62,.06);box-shadow:inset 0 0 0 1.5px rgba(192,87,62,.25);white-space:nowrap;align-self:flex-start}
+.s-debt .clock:first-child .tick{font-size:84px;padding:14px 28px;align-self:center}
+.s-debt .cs{font-size:21px;color:var(--mut)}
+.s-debt .vsrow{display:grid;grid-template-columns:1fr auto 1fr;gap:28px;align-items:center}
+.s-debt .vsrow .card{padding:20px 34px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.s-debt .vsrow .card .kk{font-size:17px}
+.s-debt .vsrow b{font-size:60px;font-weight:800;letter-spacing:-.03em}
+.s-debt .vsx{font-family:var(--serif);font-style:italic;font-size:54px;color:var(--tea)}
+
+.s-debt .clock.hh{gap:8px;padding:20px 30px}
+.s-debt .clock.hh .cs{margin-top:-2px}
+.s-debt .hhtot{display:flex;align-items:baseline;gap:14px;margin-top:6px;font-size:19px;color:var(--mut)}
+.s-debt .tick.tsm{font-size:24px;padding:4px 10px;border-radius:8px;box-shadow:none;background:rgba(192,87,62,.07)}
+.s-debt .parts{display:flex;flex-wrap:wrap;gap:8px}
+.s-debt .parts i{font-style:normal;font-size:17px;color:var(--mut);padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.8);box-shadow:inset 0 0 0 1px rgba(14,90,88,.12)}
+.s-debt .parts em{font-style:normal;font-weight:700;color:var(--ink)}
+
+.s-moves .bd{grid-template-rows:1fr}
+.s-debt .vsrow .vs2{display:block}
+.s-debt .vs2 .two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.s-debt .vs2 .two>div{display:flex;flex-direction:column;gap:2px}
+.s-debt .vs2 .two>div+div{border-left:1px solid var(--line);padding-left:28px}
+.s-debt .vs2 b{font-size:50px}
+
+/* debt slide fit pass */
+.s-debt .bd{grid-template-rows:auto auto;align-content:space-between}
+.s-debt .clocks{grid-template-rows:auto auto}
+.s-debt .clock{padding:20px 30px}
+.s-debt .clock:first-child{padding:26px 34px}
+.s-debt .clock:first-child .tick{font-size:76px}
+.s-debt .vsrow .card{padding:18px 30px}
+
+.s-infl .homes{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.s-infl .homes>div{padding:12px 18px;border-radius:14px;background:rgba(14,124,122,.07);box-shadow:inset 0 0 0 1px rgba(14,124,122,.15)}
+.s-infl .homes span{display:block;font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.s-infl .homes b{display:block;font-size:40px;font-weight:800;letter-spacing:-.02em;color:var(--tea)}
+
+/* compound: Person A vs Person B */
+.s-comp .bd{grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;gap:24px}
+.s-comp .who{display:flex;flex-direction:column;align-items:stretch;padding:22px 28px 14px;min-height:0}
+.s-comp .who .top{display:flex;align-items:center;gap:26px}
+.s-comp .av{width:170px;height:178px;flex:none;overflow:visible}
+.s-comp .tag{display:inline-block;font-size:16px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;padding:6px 14px;border-radius:999px}
+.s-comp .ta2{background:linear-gradient(160deg,#2fb3ae,#0b6f6d)}
+.s-comp .tb2{background:linear-gradient(160deg,#a9b4b8,#7d8c91)}
+.s-comp .nm{font-size:26px;font-weight:600;margin:10px 0 0!important;color:var(--ink)}
+.s-comp .big{display:block;font-size:66px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--tea)}
+.s-comp .big.g{color:var(--mut)}
+.s-comp .pi{font-size:21px;color:var(--mut)}
+.s-comp .pi strong{color:var(--ink)}
+.s-comp .ch2{flex:1;min-height:0;position:relative;margin-top:6px}
+.s-comp .ch2 svg{position:absolute;inset:0;width:100%;height:100%}
+.s-comp .area.tea{fill:url(#gArea)}
+.s-comp .area.gry{fill:rgba(138,151,156,.16)}
+.s-comp .fxa{opacity:0}
+.active .s-comp .fxa,.s-comp.active .fxa{animation:fadeIn 1s var(--ease) 1.6s both}
+.s-comp .endpt{opacity:0}
+.s-comp.active .endpt{animation:fadeIn .5s var(--ease) 2.3s both}
+.s-comp .cost{grid-column:1/-1;display:block;text-align:center;font-size:28px}
+.s-comp .cost b{color:var(--tea)}
+/* avatar motion */
+.s-comp.active .av-a{animation:sway 5s ease-in-out infinite}
+@keyframes sway{50%{transform:translateY(-6px) rotate(-1.5deg)}}
+.av-a .spark{stroke-dasharray:1;stroke-dashoffset:1}
+.s-comp.active .av-a .spark{animation:sparkDraw 3s ease-in-out .6s infinite}
+@keyframes sparkDraw{0%{stroke-dashoffset:1}45%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+.av-a .glint{opacity:0}
+.s-comp.active .av-a .glint{animation:glint 4s ease-in-out 1s infinite}
+@keyframes glint{0%,80%,100%{opacity:0}88%{opacity:1}}
+.av-b .head{transform-box:fill-box;transform-origin:50% 100%}
+.s-comp.active .av-b .head{animation:nod 4.5s ease-in-out infinite}
+@keyframes nod{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(-12deg) translateY(3px)}}
+.av-b .zz text{opacity:0}
+.s-comp.active .av-b .zz text{animation:zz 3s ease-in-out infinite}
+.s-comp.active .av-b .zz text:nth-child(2){animation-delay:.5s}
+.s-comp.active .av-b .zz text:nth-child(3){animation-delay:1s}
+@keyframes zz{0%{opacity:0;transform:translate(0,8px)}30%{opacity:1}100%{opacity:0;transform:translate(8px,-14px)}}
+.s-comp.active .av-b .tvglow{animation:tv 1.6s steps(2) infinite}
+@keyframes tv{50%{opacity:.32}}
+
+/* dca: choppy market */
+.s-dca .bd{grid-template-columns:.9fr 1.25fr}
+.ln.ink{stroke:#2c4a52;stroke-width:3.2;filter:drop-shadow(0 6px 8px rgba(22,38,43,.18))}
+.s-dca svg .vl{font-size:21px}
+.s-dca svg .vl.up{fill:var(--tea)}
+.s-dca svg .vl.dnf{fill:var(--rst)}
+.s-dca svg .vl.sm2{font-size:18px;fill:var(--ink)}
+
+.s-debt .tsm{font-size:24px;font-weight:800;color:var(--rst);padding:4px 10px;border-radius:8px;background:rgba(192,87,62,.07)}
+.s-debt .vs2 .all{display:block;margin-bottom:6px;color:var(--tea);letter-spacing:.06em;white-space:nowrap}
+.s-debt .vs2 .two{grid-template-columns:1fr auto 1fr;align-items:center}
+.s-debt .vs2 .two>div+div{border-left:0;padding-left:0}
+.s-debt .vs2 .mid{font-family:var(--serif);font-style:italic;font-size:34px;color:var(--mut)}
+.s-debt .vs2 b.med{font-style:italic}
+
+.s-dca .lcol{gap:16px}
+.s-dca .math{display:grid;grid-template-columns:auto auto 30px auto auto 30px auto auto;align-items:baseline;column-gap:10px;row-gap:12px;padding:18px 24px}
+.s-dca .math .eq{display:contents;font-size:26px}
+.s-dca .math .eq .kk{font-size:12px;letter-spacing:.1em}
+.s-dca .math .eq b{font-size:28px;font-weight:800}
+.s-dca .math .eq i{font-style:normal;font-size:26px;color:var(--mut);text-align:center}
+
+/* interactive dca chart (same zoom pill as the S&P chart) */
+.s-dca2 .int{display:flex;flex-direction:column}
+.s-dca2 .ctop{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.s-dca2 .ctop .ch{margin:0}
+.s-dca2 .zoom{display:flex;align-items:center;gap:6px;padding:5px;border-radius:999px;background:rgba(14,90,88,.06);box-shadow:inset 0 0 0 1px rgba(14,90,88,.08)}
+.s-dca2 .zoom span{font-size:15px;font-weight:600;color:var(--mut);padding:0 10px 0 12px}
+.s-dca2 .zoom button{font:600 17px var(--sans);color:var(--mut);background:transparent;border:0;border-radius:999px;padding:9px 18px;cursor:pointer}
+.s-dca2 .zoom button:hover{color:var(--ink);background:rgba(255,255,255,.8)}
+.s-dca2 .zoom button.on{color:#fff;background:linear-gradient(160deg,#2fb3ae,#0b6f6d);box-shadow:0 8px 18px -8px rgba(14,124,122,.7)}
+.s-dca2 .spwrap{position:relative;flex:1;min-height:0;margin-top:6px}
+.s-dca2 .spwrap svg{position:absolute;inset:0;width:100%;height:100%}
+.s-dca2 svg .ax.sm{font-size:15px}
+.s-dca2 .guide{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:4 5;opacity:0;transition:opacity .2s}
+.s-dca2 .guide.on{opacity:.5}
+.s-dca2 .fade{opacity:0}
+.s-dca2.active .fade{animation:fadeIn .6s var(--ease) 1.2s both}
+#dctip{position:absolute;top:0;transform:translate(-50%,-6px);pointer-events:none;opacity:0;padding:10px 16px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px rgba(14,90,88,.1),0 16px 30px -14px rgba(14,60,62,.45);display:flex;gap:12px;align-items:baseline;white-space:nowrap;transition:opacity .2s,left .1s var(--ease)}
+#dctip.on{opacity:1}
+#dctip b{font-size:21px}
+#dctip span{font-size:22px;font-weight:800}
+#dctip em{font-style:normal;font-size:18px;color:var(--mut)}
+
+.s-div .r2 small{display:block;font-size:18px;color:var(--mut);margin-top:2px}
+
+/* stocks vs mutual funds */
+.s-funds .bd{grid-template-rows:auto 1fr;gap:22px}
+.s-funds .vsrow2{display:grid;grid-template-columns:1fr 110px 1fr;align-items:center;gap:0}
+.s-funds .side1,.s-funds .side2{display:flex;align-items:center;gap:26px;padding:22px 30px}
+.s-funds .side2{background:linear-gradient(160deg,rgba(255,255,255,.92),rgba(220,240,238,.85))}
+.s-funds svg.one,.s-funds svg.many{width:190px;height:156px;flex:none;overflow:visible}
+.s-funds .tag{display:inline-block;font-size:16px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;padding:6px 14px;border-radius:999px;background:linear-gradient(160deg,#5b7f9c,#3f5f78)}
+.s-funds .tag.t2{background:linear-gradient(160deg,#2fb3ae,#0b6f6d)}
+.s-funds .big{font-family:var(--serif);font-size:44px;font-weight:600;line-height:1.05;margin:12px 0 4px!important;color:var(--ink)}
+.s-funds .sm{font-size:21px!important;color:var(--mut)!important}
+.s-funds .vsb{justify-self:center;width:96px;height:96px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(160deg,#e08a72,#b9503a);color:#fff;font-weight:900;font-size:32px;letter-spacing:.02em;box-shadow:0 18px 34px -14px rgba(192,87,62,.65),0 0 0 8px rgba(255,255,255,.7);z-index:2}
+.s-funds.active .vsb span{display:inline-block;animation:vsPop 2.4s var(--ease) 1s infinite}
+@keyframes vsPop{0%,70%,100%{transform:scale(1) rotate(0)}80%{transform:scale(1.22) rotate(-8deg)}90%{transform:scale(.95) rotate(4deg)}}
+/* one building */
+.one .bld{fill:#e6edf2;stroke:#5b7f9c;stroke-width:3}
+.one .win rect{fill:#5b7f9c;opacity:.35}
+.s-funds.active .one .win rect{animation:winOn 3s ease-in-out infinite}
+.s-funds.active .one .win rect:nth-child(3n+1){animation-delay:.4s}
+.s-funds.active .one .win rect:nth-child(4n){animation-delay:1.1s}
+@keyframes winOn{50%{opacity:.9;fill:#ffc25c}}
+.one .door{fill:#5b7f9c}
+.one .flag{fill:#c0573e;stroke:#16262b;stroke-width:2.5;stroke-linejoin:round}
+.one .gnd{stroke:#9aa7ab;stroke-width:3;stroke-linecap:round}
+.s-funds.active svg.one{animation:bob1 4s ease-in-out infinite}
+@keyframes bob1{50%{transform:translateY(-5px)}}
+/* basket of many */
+.many .tiles rect{opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+.many .tiles .t0{fill:#2fb3ae}.many .tiles .t1{fill:#5b7f9c}.many .tiles .t2{fill:#ffc25c}
+.s-funds.active .many .tiles rect{animation:drop .6s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(.6s + var(--i)*55ms)}
+@keyframes drop{from{opacity:0;transform:translateY(-60px) scale(.6)}to{opacity:1;transform:none}}
+.many .bsk{fill:#c99a62;stroke:#8a6238;stroke-width:3;stroke-linejoin:round}
+.many .rim{stroke:#8a6238;stroke-width:6;stroke-linecap:round}
+.many .hdl{fill:none;stroke:#8a6238;stroke-width:6;stroke-linecap:round}
+/* comparison table */
+.s-funds .cmp{display:flex;flex-direction:column;justify-content:center;gap:6px;padding:18px 30px}
+.s-funds .ch3,.s-funds .cr{display:grid;grid-template-columns:230px 1fr 1fr;gap:24px;align-items:center}
+.s-funds .ch3 span{font-size:16px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.s-funds .ch3 .a{color:#3f5f78}.s-funds .ch3 .b{color:var(--tea)}
+.s-funds .cr{padding:11px 0;border-top:1px solid var(--line)}
+.s-funds .cr .cl{font-size:20px;font-weight:700;color:var(--mut);background:none;padding:0;text-transform:none;letter-spacing:0}
+.s-funds .cr .a,.s-funds .cr .b{font-size:23px;color:var(--ink)}
+.s-funds .cr .b{font-weight:600}
+
+/* risk: two equal cards */
+.s-risk .hd h2{font-size:68px}
+.s-risk .bd{grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;align-items:stretch;gap:28px 32px}
+.s-risk .ask,.s-risk .abil{padding:40px 44px;display:flex;flex-direction:column;justify-content:center}
+.s-risk .abil .q{font-size:46px;font-weight:600;line-height:1.2;margin:6px 0 0;color:var(--ink)}
+.s-risk .abil .q b{color:var(--tea)}
+.s-risk .ask .q{font-size:46px}
+.s-risk .qs{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+.s-risk .qs li{position:relative;padding-left:30px;font-size:26px;color:var(--mut);line-height:1.3}
+.s-risk .qs li::before{content:"";position:absolute;left:4px;top:.5em;width:11px;height:11px;border-radius:50%;background:var(--tea)}
+.s-risk .spec{align-self:center}
+.s-risk .band.sm{align-self:center;font-size:26px}
+.s-funds .cr{padding:16px 0}
+.s-funds .cr .a,.s-funds .cr .b{font-size:27px}
+.s-funds .cr .cl{font-size:22px}
+
+/* round 7: storms bands */
+.s-dca2 .band{fill:rgba(192,87,62,.08);stroke:none}
+.s-dca2 svg .an{font-size:18px;fill:var(--rst)}
+
+/* debt: credit card under the per-household box, retirement on one line */
+.s-debt .bd{grid-template-rows:1fr auto}
+.s-debt .clocks{grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;grid-template-areas:"nat nat" "hh nc" "hh cc"}
+.s-debt .clock:first-child{grid-area:nat}
+.s-debt .clock.hh{grid-area:hh}
+.s-debt .clock.nc{grid-area:nc}
+.s-debt .clock.cc{grid-area:cc;flex-direction:row;align-items:center;justify-content:space-between;padding:16px 30px}
+.s-debt .ccv{font-size:44px;font-weight:800;color:var(--rst);letter-spacing:-.02em;padding:8px 18px;border-radius:12px;background:rgba(192,87,62,.06);box-shadow:inset 0 0 0 1.5px rgba(192,87,62,.25)}
+.s-debt .ret1{display:flex;align-items:center;gap:22px;padding:18px 32px;white-space:nowrap}
+.s-debt .ret1 .all{font-size:15px;color:var(--tea);margin-right:auto;line-height:1.4}
+.s-debt .ret1 .all em{font-style:normal;color:var(--mut);letter-spacing:.04em}
+.s-debt .ret1 b{font-size:52px;font-weight:800;letter-spacing:-.03em}
+.s-debt .ret1 b.med{font-style:italic}
+.s-debt .ret1 .mid{font-family:var(--serif);font-style:italic;font-size:36px;color:var(--mut)}
+
+/* time in the market */
+.s-time .hd h2{font-size:66px}
+.s-time .bd{grid-template-columns:560px 1fr}
+.s-time .lcol{gap:14px}
+.s-time .why{padding:16px 24px;display:flex;flex-direction:column;gap:4px}
+.s-time .why b{font-size:24px}
+.s-time .why span{font-size:19px;color:var(--mut);line-height:1.35}
+.s-time .stay{padding:16px 24px;margin-top:auto}
+.s-time .stay b{display:block;font-size:42px;font-weight:800;letter-spacing:-.02em;color:var(--tea);margin:2px 0}
+.s-time .stay span:last-child{font-size:18px;color:var(--mut)}
+.s-time .int{display:flex;flex-direction:column}
+.s-time .ctop{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.s-time .ctop .ch{margin:0}
+.s-time .zoom{display:flex;align-items:center;gap:6px;padding:5px;border-radius:999px;background:rgba(14,90,88,.06);box-shadow:inset 0 0 0 1px rgba(14,90,88,.08)}
+.s-time .zoom span{font-size:15px;font-weight:600;color:var(--mut);padding:0 10px 0 12px}
+.s-time .zoom button{font:600 17px var(--sans);color:var(--mut);background:transparent;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
+.s-time .zoom button:hover{color:var(--ink);background:rgba(255,255,255,.8)}
+.s-time .zoom button.on{color:#fff;background:linear-gradient(160deg,#2fb3ae,#0b6f6d);box-shadow:0 8px 18px -8px rgba(14,124,122,.7)}
+.s-time .readout{display:flex;align-items:flex-end;justify-content:space-between;margin-top:12px}
+.s-time .readout b{display:block;font-size:56px;font-weight:800;letter-spacing:-.03em;color:var(--tea);transition:color .3s}
+.s-time .readout.bad>div:first-child b{color:var(--rst)}
+.s-time .readout .lost{text-align:right;opacity:0;transition:opacity .3s}
+.s-time .readout.bad .lost{opacity:1}
+.s-time .readout .lost b{font-size:40px;color:var(--rst)}
+.s-time .spwrap{position:relative;flex:1;min-height:0;margin-top:4px}
+.s-time .spwrap svg{position:absolute;inset:0;width:100%;height:100%}
+.s-time .guide{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:4 5;opacity:0;transition:opacity .2s}
+.s-time .guide.on{opacity:.5}
+.s-time .ln{stroke-width:2.6}
+.s-time .missed{fill:#fff;stroke:var(--rst);stroke-width:3;opacity:0;animation:fadeIn .4s var(--ease) both;animation-delay:calc(.4s + var(--n)*40ms)}
+#tmtip{position:absolute;top:0;transform:translate(-50%,-6px);pointer-events:none;opacity:0;padding:9px 14px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px rgba(14,90,88,.1),0 16px 30px -14px rgba(14,60,62,.45);display:flex;gap:10px;align-items:baseline;white-space:nowrap;transition:opacity .2s,left .08s}
+#tmtip.on{opacity:1}
+#tmtip b{font-size:19px}
+#tmtip span{font-size:19px;font-weight:800}
+#tmtip em{font-style:normal;font-size:17px;color:var(--mut)}
+#tmtip i{font-style:normal;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--rst);padding:2px 8px;border-radius:999px}
+
+/* elevators: one cable vs many */
+.s-funds svg.elev{width:170px;height:196px;flex:none;overflow:visible}
+.elev .shaft{fill:rgba(14,60,62,.05);stroke:rgba(14,60,62,.14);stroke-width:2}
+.elev .beam{fill:#3f5f78}
+.elev .pulley{fill:#fff;stroke:#3f5f78;stroke-width:3}
+.elev .pulley.sm{stroke-width:2}
+.elev .cable{stroke:#5f6f75;stroke-width:2.4}
+.elev .cable.solo{stroke-width:3.2}
+.elev .box{stroke-width:3}
+.elev.one .box{fill:#e6edf2;stroke:#3f5f78}
+.elev.many .box{fill:#dff1ef;stroke:#0e7c7a}
+.elev .door{stroke:rgba(14,60,62,.25);stroke-width:2}
+.elev .lamp{fill:#ffc25c}
+.elev .lbl{font-family:var(--sans);font-weight:800;font-size:22px;fill:#16262b}
+.elev.one .lbl{font-size:30px}
+.elev .car{transform-box:view-box}
+/* one stock: jerky ride, the cable strains red on each drop */
+.s-funds.active .elev .c1{animation:ride1 4.2s cubic-bezier(.5,0,.5,1) infinite}
+@keyframes ride1{0%{transform:translateY(0)}14%{transform:translateY(-26px)}20%{transform:translateY(22px)}24%{transform:translateY(14px)}40%{transform:translateY(-12px)}55%{transform:translateY(-34px)}62%{transform:translateY(30px)}66%{transform:translateY(20px)}82%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+.s-funds.active .elev .solo{animation:strain 4.2s linear infinite}
+@keyframes strain{0%,17%,26%,59%,70%,100%{stroke:#5f6f75}20%,62%{stroke:#c0573e;stroke-width:4.5}}
+.s-funds.active .elev.one .lamp{animation:blink 4.2s steps(1) infinite}
+@keyframes blink{0%,18%,28%,60%,70%,100%{fill:#ffc25c}19%,61%{fill:#c0573e}}
+/* mutual fund: calm float, one cable snaps and swings away, the car barely dips */
+.s-funds.active .elev .c2{animation:ride2 5s ease-in-out infinite}
+@keyframes ride2{0%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}46%{transform:translateY(3px)}50%{transform:translateY(2px)}75%{transform:translateY(-4px)}}
+.elev .snap{transform-box:fill-box;transform-origin:50% 100%}
+.s-funds.active .elev .snap{animation:snap 5s ease-in infinite}
+@keyframes snap{0%,40%{opacity:1;transform:none;stroke:#5f6f75}44%{stroke:#c0573e}52%{opacity:.9;transform:translate(10px,-40px) rotate(14deg);stroke:#c0573e}62%{opacity:0;transform:translate(16px,-70px) rotate(20deg)}86%{opacity:0;transform:none}96%,100%{opacity:1;transform:none;stroke:#5f6f75}}
+.s-funds.active .elev.many .cable:not(.snap){animation:hum 5s ease-in-out infinite}
+@keyframes hum{44%,52%{stroke:#0e7c7a}}
+
+.s-funds .bd{grid-template-rows:1fr auto}
+.s-funds .side1,.s-funds .side2{height:100%;padding:24px 34px}
+.s-funds svg.elev{width:250px;height:288px}
+.s-funds .big{font-size:52px}
+.s-funds .sm{font-size:24px!important;line-height:1.35}
+.s-funds .cmp{padding:16px 32px}
+
+/* time in the market v2 */
+.s-time .stay b.mb{font-size:36px}
+.s-time .stay b.mb span{font-size:inherit!important;color:inherit}
+.s-time .stay b.mb .dn{color:var(--rst)}
+.s-time .zoom.who button{padding:9px 16px}
+.s-time .readout2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:12px;align-items:start}
+.s-time .readout2 b{display:block;font-size:44px;font-weight:800;letter-spacing:-.02em;color:var(--tea);transition:opacity .3s}
+.s-time .readout2 .rb b{color:var(--rst)}
+.s-time .readout2 .rb em{display:block;font-style:normal;font-size:17px;color:var(--mut);margin-top:4px;line-height:1.35}
+.s-time .readout2 .rb{opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s var(--ease)}
+.s-time .readout2 .rb.show{opacity:1;transform:none}
+.s-time .readout2 .ra.dim{opacity:.35}
+.s-time .cash{fill:rgba(192,87,62,.1)}
+.s-time.active .fade{animation:fadeIn .6s var(--ease) .4s both}
+#tltip{position:absolute;top:0;transform:translate(-50%,-6px);pointer-events:none;opacity:0;padding:9px 14px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px rgba(14,90,88,.1),0 16px 30px -14px rgba(14,60,62,.45);display:flex;gap:10px;align-items:baseline;white-space:nowrap;transition:opacity .2s,left .08s}
+#tltip.on{opacity:1}
+#tltip b{font-size:19px}
+#tltip span{font-size:19px;font-weight:800}
+#tltip em{font-style:normal;font-size:17px;color:var(--tea);font-weight:600}
+#tltip em.dn{color:var(--rst)}
+#tltip i{font-style:normal;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--rst);padding:2px 8px;border-radius:999px}
+
+.s-time .lcol{gap:12px}
+.s-time .why{padding:13px 22px}
+.s-time .why b{font-size:22px}
+.s-time .why span{font-size:18px}
+.s-time .stay{padding:12px 22px;margin-top:0}
+.s-time .stay+.stay{margin-top:0}
+.s-time .lcol .stay:first-of-type{margin-top:auto}
+.s-time .stay b.mb{font-size:32px}
+
+#bar{position:fixed;left:0;right:0;bottom:0;height:4px;background:transparent;z-index:5}
+#bar i{display:block;height:100%;background:var(--tea);width:0;transition:width .4s var(--ease)}
+
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  html,body{overflow:visible;background:#fff}
+  #stage{position:static;transform:none!important;width:1920px;height:auto}
+  .slide{position:relative;opacity:1;visibility:visible;width:1920px;height:1080px;page-break-after:always;break-after:page}
+  .slide{transform:none!important;filter:none!important;transition:none!important}
+  #bg,#grain{position:absolute;height:100%}
+  .fx,.gr,.grd,.split .lt{opacity:1;transform:none;filter:none;animation:none!important}
+  .draw{stroke-dashoffset:0;animation:none!important}
+  #bar{display:none}
+}
+
+.s-time .ask{padding:22px 26px;margin-top:auto;background:linear-gradient(160deg,rgba(47,179,174,.10),rgba(255,255,255,.85));box-shadow:inset 0 0 0 1.5px rgba(20,163,160,.35),0 18px 40px -24px rgba(14,90,88,.35)}
+.s-time .ask p{margin:6px 0 0;font-family:var(--serif,'Source Serif 4',serif);font-size:27px;line-height:1.32;color:var(--ink)}
+.s-time .ask p b{font-weight:600;color:var(--tea)}
+.s-time .ask p .dn{font-weight:600}
+/* simple version: household debt card runs full width, same shape as the national debt card */
+.s-debt .clock.hh{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;gap:30px;padding:26px 34px}
+.s-debt .clock.hh>div{display:flex;flex-direction:column;gap:12px}
+.s-debt .clock.hh .tick{font-size:72px;align-self:center}
+/* simple version: fewer boxes, so the ones left fill the space */
+.s-disc .dgrid{grid-template-columns:1fr;gap:22px;padding-top:24px}
+.s-disc .dgrid p{font-size:32px}
+.s-forty .stats{align-content:stretch;grid-template-rows:1fr 1fr;gap:22px}
+.s-forty .st{display:flex;flex-direction:column;justify-content:center}
+.s-forty .st b{font-size:58px}
+.s-moves .grid8{grid-template-columns:repeat(2,1fr)}
+.s-moves .grid8 .mv{flex-direction:row;align-items:center;justify-content:flex-start;gap:28px;padding:30px 48px}
+.s-moves .grid8 .mv .ic{width:64px;height:64px;margin:0}
+.s-moves .grid8 .mv b{font-size:52px}
+.s-dca2 .stats{grid-template-columns:repeat(2,1fr)}
+.s-time .lcol .why{flex:1;justify-content:center;gap:10px;padding:24px 32px}
+.s-time .lcol .why b{font-size:34px}
+.s-time .lcol .why span{font-size:26px}
+.s-div .lcol .card{display:flex;flex-direction:column;justify-content:center}
+.s-div .lcol .card p,.s-div .lcol .dots li{font-size:36px;line-height:1.35}
+.s-div .dv{flex:none;height:420px;margin:auto 0}
+.s-div .dv{height:auto;flex:none;margin:auto 0;padding-bottom:30px}
+.s-tax .bd{grid-template-columns:1fr 1fr 1fr}
+.s-tax .tx{padding:34px 36px}
+.s-tax h3{font-size:54px}
+.s-tax .ex{margin-top:22px}
+.s-tax .ex span{font-size:24px;padding:8px 14px}
+.s-tax .pc{gap:22px;margin-top:36px}
+.s-tax .pc li,.s-tax .rws span{font-size:32px;padding-left:36px}
+.s-tax .rws{gap:24px;margin-top:22px}
+.s-tax .rws b{font-size:32px;margin-bottom:8px}
+.s-plan .cks{grid-template-columns:1fr}
+.s-plan .cks b{font-size:36px}
+.s-plan .cks span{font-size:26px}
+</style></head>
+<body><div id="bg"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div><div id="grain"></div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="gTea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2fb3ae"/><stop offset="1" stop-color="#0b6f6d"/></linearGradient>
+<linearGradient id="gRst" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9503a"/><stop offset="1" stop-color="#e08a72"/></linearGradient>
+<linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14a3a0" stop-opacity=".28"/><stop offset="1" stop-color="#14a3a0" stop-opacity="0"/></linearGradient>
+<linearGradient id="gLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fc7c1"/><stop offset="1" stop-color="#0b6f6d"/></linearGradient>
+</defs></svg>
+<div id="stage">
+<section class="slide s-title">
+  <div class="tl">
+    <div class="kicker fx">The simple version</div>
+    <h1 class="split">Investing <em>101</em></h1>
+    <div class="handle fx" style="--d:.24s"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle class="dt" cx="17.3" cy="6.7" r="1.1"/></svg>@oliviasulawang</div>
+  </div>
+  <figure class="tg fx" style="--d:.2s">
+    <svg viewBox="0 0 760 520">
+      <path class="tarea" d="M20.0 448.7 L38.0 432.4 L56.0 427.6 L74.0 412.9 L92.0 386.7 L110.0 389.7 L128.0 364.3 L146.0 357.3 L164.0 348.2 L182.0 346.9 L200.0 316.5 L218.0 296.9 L236.0 269.4 L254.0 245.5 L272.0 227.3 L290.0 236.4 L308.0 248.4 L326.0 272.2 L344.0 248.2 L362.0 238.4 L380.0 233.8 L398.0 219.8 L416.0 214.7 L434.0 258.8 L452.0 236.4 L470.0 223.0 L488.0 221.0 L506.0 206.9 L524.0 180.2 L542.0 167.9 L560.0 166.6 L578.0 155.9 L596.0 137.1 L614.0 141.3 L632.0 115.2 L650.0 99.1 L668.0 75.1 L686.0 94.1 L704.0 71.9 L722.0 50.6 L740.0 34.9 L740.0 470 L20.0 470 Z"/>
+      <path class="tline draw" pathLength="1" d="M20.0 448.7 L38.0 432.4 L56.0 427.6 L74.0 412.9 L92.0 386.7 L110.0 389.7 L128.0 364.3 L146.0 357.3 L164.0 348.2 L182.0 346.9 L200.0 316.5 L218.0 296.9 L236.0 269.4 L254.0 245.5 L272.0 227.3 L290.0 236.4 L308.0 248.4 L326.0 272.2 L344.0 248.2 L362.0 238.4 L380.0 233.8 L398.0 219.8 L416.0 214.7 L434.0 258.8 L452.0 236.4 L470.0 223.0 L488.0 221.0 L506.0 206.9 L524.0 180.2 L542.0 167.9 L560.0 166.6 L578.0 155.9 L596.0 137.1 L614.0 141.3 L632.0 115.2 L650.0 99.1 L668.0 75.1 L686.0 94.1 L704.0 71.9 L722.0 50.6 L740.0 34.9"/>
+      <line class="grid" x1="20" x2="740" y1="470" y2="470"/>
+    </svg>
+  </figure>
+  <footer class="ft"><span></span><span class="src"></span><span class="pn"></span></footer>
+</section>
+<section class="slide s-disc">
+  <header class="hd"><div class="kicker fx">Please read</div><h2 class="split">Important <em>disclaimer</em></h2></header>
+  <div class="bd">
+  <blockquote class="fx" style="--d:.15s">Information presented here is not intended to be construed as a recommendation nor any investment advice. Opinions expressed here are the sole personal opinion of the speaker, and in no way are intended to be a representation of any particular investment firm, advisory body, or financial entity.</blockquote>
+  <div class="dgrid">
+    <p class="fx" style="--d:0.30s"><b>Education only.</b> Not investment, tax, or legal advice.</p>
+    <p class="fx" style="--d:0.37s"><b>Examples are hypothetical.</b> No fees or taxes shown.</p>
+    <p class="fx" style="--d:0.44s"><b>Investing involves risk.</b> You can lose money. The past does not promise the future.</p>
+  </div>
+  <div class="band nophoto fx" style="--d:.75s"><svg class="ic" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/><path d="M3 3l18 18"/></svg><span><b>Please do not take photos or recordings.</b> This presentation is for your eyes only.</span></div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src"></span><span class="pn"></span></footer>
+</section>
+<section class="slide s-scope">
+  <header class="hd"><div class="kicker fx">About this series</div><h2 class="split">What we will and <em>won't</em> cover</h2></header>
+  <div class="bd">
+  <div class="card col fx" style="--d:.15s"><div class="ch ok">This series will cover</div><ul><li class="fx" style="--d:0.30s"><svg class="ic ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Basic money concepts</span></li><li class="fx" style="--d:0.37s"><svg class="ic ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>How saving and investing work</span></li></ul></div>
+  <div class="card col fx" style="--d:.25s"><div class="ch no">This series will not cover</div><ul><li class="fx" style="--d:0.60s"><svg class="ic no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span>Specific products</span></li><li class="fx" style="--d:0.67s"><svg class="ic no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span>Investment advice</span></li></ul></div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src"></span><span class="pn"></span></footer>
+</section>
+<section class="slide s-debt">
+  <header class="hd"><div class="kicker fx">Why this matters</div><h2 class="split">The U.S. debt <em>crisis</em></h2></header>
+  <div class="bd">
+  <div class="clocks"><div class="card clock fx" style="--d:0.20s"><div><span class="cl">U.S. national debt</span><span class="cs">+$63,797 every second</span></div><b class="tick" data-v="40585033996170" data-r="63797.089307" data-dec="0" data-t0="1794351205082">$40,585,033,996,170</b></div><div class="card clock hh fx" style="--d:0.27s"><div><span class="cl">Average debt per household</span><span class="cs">mortgage, cars, school, and cards</span></div><b class="tick" data-v="139476.22227168188" data-r="0.00015469" data-dec="2" data-t0="1794351205082">$139,476.22</b></div></div>
+  <div class="card ret1 fx" style="--d:.8s"><span class="kk all">Retirement savings</span><span class="kk">Average</span><b class="up">$451,118</b><i class="mid">vs.</i><span class="kk">Median</span><b class="up med">$106,000</b></div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">Clocks: usdebtclock.org and the Federal Reserve Bank of New York (household debt, Q2 2026), running estimates. Household debt per household: NY Fed total divided by 134.8M households (Census). Retirement accounts: Federal Reserve, 2025 Survey of Consumer Finances, families with any account.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-mkt">
+  <header class="hd"><div class="kicker fx">The basics</div><h2 class="split">What is the <em>“stock market”</em>?</h2></header>
+  <div class="bd">
+  <p class="lead fx" style="--d:.15s">A place to buy and sell <b>shares</b> of companies.</p>
+  <div class="row">
+    <div class="card flow fx" style="--d:.25s">
+      <div class="node"><b>Companies</b><span>Sell shares to grow</span></div>
+      <svg class="arr" viewBox="0 0 80 40"><path d="M4 20h66M58 9l12 11-12 11"/></svg>
+      <div class="node mid"><b>Exchanges</b><span>NYSE, Nasdaq</span></div>
+      <svg class="arr" viewBox="0 0 80 40"><path d="M76 20H10M22 9L10 20l12 11"/></svg>
+      <div class="node"><b>Investors</b><span>Buy shares to own a piece</span></div>
+    </div>
+    <div class="card idx fx" style="--d:.35s">
+      <h3 class="ttl">Common Stock Market Indices</h3>
+      <div class="ir"><b>S&amp;P 500</b><span>500 large U.S. companies</span></div>
+      <div class="ir"><b>Dow Jones</b><span>30 big companies</span></div>
+    </div>
+  </div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src"></span><span class="pn"></span></footer>
+</section>
+<section class="slide s-forty">
+  <header class="hd"><div class="kicker fx">The S&amp;P 500</div><h2 class="split">40 years of <em>ups and downs</em></h2></header>
+  <div class="bd">
+  <div class="card plot int fx" id="sp" style="--d:.15s" data-sp='{"y":[1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"r":[14.62,2.03,12.4,27.25,-6.56,26.31,4.46,7.06,-1.54,34.11,20.26,31.01,26.67,19.53,-10.14,-13.04,-23.37,26.38,8.99,3.0,13.62,3.53,-38.49,23.45,12.78,0.0,13.41,29.6,11.39,-0.73,9.54,19.42,-6.24,28.88,16.26,26.89,-19.44,24.23,23.31,16.39],"rt":[18.67,5.25,16.61,31.69,-3.1,30.47,7.62,10.08,1.32,37.58,22.96,33.36,28.58,21.04,-9.1,-11.89,-22.1,28.68,10.88,4.91,15.79,5.49,-37.0,26.46,15.06,2.11,16.0,32.39,13.69,1.38,11.96,21.83,-4.38,31.49,18.4,28.71,-18.11,26.29,25.02,17.88],"notes":[[1987,"1987 crash","Year still ended up","top"],[2020,"COVID, 2020","Fell 34%, ended up 16%","top"],[2001,"Dot-com bust","3 down years in a row","below"],[2008,"Financial crisis","Worst year: -38.5%","side"],[2022,"Rate hikes","-19%","below"]]}'>
+    <div class="ctop"><div class="ch">Yearly return, <span id="sprange">1986 to 2025</span></div></div>
+    <div class="spwrap"><svg id="spsvg" viewBox="0 0 1240 540"></svg><div id="sptip"></div></div>
+  </div>
+  <div class="stats nocount">
+    <div class="card st fx" style="--d:0.40s"><span class="kk">Up years</span><b id="spup">33 of 40</b></div>
+    <div class="card st fx" style="--d:0.47s"><span class="kk">Average growth</span><b id="spavg">11.5% a year</b></div>
+  </div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">S&amp;P 500 price return, dividends not included. You cannot invest directly in an index. Past performance does not guarantee future results.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-moves">
+  <header class="hd"><div class="kicker fx">The basics</div><h2 class="split">What makes it go <em>up or down?</em></h2></header>
+  <div class="bd">
+  <div class="grid8"><div class="card mv fx" style="--d:0.15s"><svg class="ic" viewBox="0 0 24 24"><path d="M4 19h16M7 16v-4M12 16V8M17 16v-7"/></svg><b>Company profits</b></div><div class="card mv fx" style="--d:0.22s"><svg class="ic" viewBox="0 0 24 24"><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/><path d="M18 6L6 18"/></svg><b>Interest rates</b></div><div class="card mv fx" style="--d:0.29s"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><b>World events</b></div><div class="card mv fx" style="--d:0.36s"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 10h.01M15 10h.01M8.5 14.5c2 2 5 2 7 0"/></svg><b>How people feel</b></div></div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src"></span><span class="pn"></span></footer>
+</section>
+<section class="slide s-any">
+  <div class="glow"></div>
+  <div class="cloud"><div class="chipx fx" style="--x:12%;--y:14%;--d:0.50s"><span class="k" style="animation-delay:-0.0s;animation-duration:6s">Politics</span></div><div class="chipx fx" style="--x:50%;--y:10%;--d:0.57s"><span class="k" style="animation-delay:-1.7s;animation-duration:7s">Company profits</span></div><div class="chipx fx" style="--x:88%;--y:15%;--d:0.64s"><span class="k" style="animation-delay:-3.4s;animation-duration:8s">Interest rates</span></div><div class="chipx fx" style="--x:7%;--y:45%;--d:0.71s"><span class="k" style="animation-delay:-5.1s;animation-duration:9s">Inflation</span></div><div class="chipx fx" style="--x:93%;--y:47%;--d:0.78s"><span class="" style="animation-delay:-6.8s;animation-duration:6s">Elections</span></div><div class="chipx fx" style="--x:12%;--y:80%;--d:0.85s"><span class="" style="animation-delay:-1.5s;animation-duration:7s">Oil prices</span></div><div class="chipx fx" style="--x:50%;--y:90%;--d:0.92s"><span class="" style="animation-delay:-3.2s;animation-duration:8s">Headlines</span></div><div class="chipx fx" style="--x:88%;--y:80%;--d:0.99s"><span class="" style="animation-delay:-4.9s;animation-duration:9s">Wars</span></div><div class="chipx fx" style="--x:30%;--y:22%;--d:1.06s"><span class="" style="animation-delay:-6.6s;animation-duration:6s">Pandemics</span></div><div class="chipx fx" style="--x:70%;--y:24%;--d:1.13s"><span class="k" style="animation-delay:-1.3s;animation-duration:7s">The Fed</span></div><div class="chipx fx" style="--x:30%;--y:80%;--d:1.20s"><span class="" style="animation-delay:-3.0s;animation-duration:8s">New technology</span></div></div>
+  <div class="anyc">
+    <div class="kicker fx">So what moves the market?</div>
+    <p class="pre fx" style="--d:.15s">Basically</p>
+    <h2 class="split mega">anything &amp; <em>everything.</em></h2>
+  </div>
+  <footer class="ft"><span>Investing 101</span><span class="src"></span><span class="pn"></span></footer>
+</section>
+<section class="slide s-infl">
+  <header class="hd"><div class="kicker fx">Inflation</div><h2 class="split">The quiet <em>money leak</em></h2></header>
+  <div class="bd">
+  <div class="lcol">
+    <div class="card fx" style="--d:.15s"><div class="ch">What it is</div><p>Prices go up. Each dollar <b>buys less.</b></p><div class="homes"><div><span>Median home, 1960</span><b>$11,900</b></div><div><span>Median home, 2026</span><b>$393,300</b></div></div></div>
+    <div class="card fx" style="--d:.22s"><div class="ch">Why it matters</div><p>Your money has to grow <b>faster than prices.</b></p></div>
+  </div>
+  <div class="card pp fx" style="--d:.2s">
+    <div class="ch">What $100 of stuff will cost at 2.5% a year</div>
+    <div class="ibars"><div class="ib"><span class="fx" style="--d:0.60s">$100</span><i class="gr" style="--d:0.30s;height:150px"></i><em>Today</em></div><div class="ib"><span class="fx" style="--d:0.68s">$113</span><i class="gr" style="--d:0.38s;height:170px"></i><em>In 5 yrs</em></div><div class="ib"><span class="fx" style="--d:0.76s">$128</span><i class="gr" style="--d:0.46s;height:192px"></i><em>In 10 yrs</em></div><div class="ib"><span class="fx" style="--d:0.84s">$145</span><i class="gr" style="--d:0.54s;height:217px"></i><em>In 15 yrs</em></div><div class="ib"><span class="fx" style="--d:0.92s">$164</span><i class="gr" style="--d:0.62s;height:246px"></i><em>In 20 yrs</em></div><div class="ib"><span class="fx" style="--d:1.00s">$185</span><i class="gr" style="--d:0.70s;height:278px"></i><em>In 25 yrs</em></div></div>
+    <p class="hint">Prices double in about 29 years.</p>
+  </div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">Home prices: U.S. Census Bureau (1960 median home value) and Federal Reserve Bank of St. Louis (median new-home sales price, Q3 2026). Inflation bars are hypothetical at 2.5% a year.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-comp">
+  <header class="hd"><div class="kicker fx">Compound growth</div><h2 class="split">Time is the <em>multiplier</em></h2></header>
+  <div class="bd">
+  <div class="card who b fx" style="--d:.15s">
+    <div class="top"><svg class="av av-b" viewBox="0 0 200 210" aria-label="Mr. Asleep">
+  <circle cx="100" cy="108" r="96" fill="#f3e2dc"/>
+  <ellipse class="tvglow" cx="96" cy="106" rx="70" ry="60" fill="#9fd0ff" opacity=".18"/>
+  <rect x="20" y="146" width="160" height="50" rx="16" fill="#8f9ea3"/>
+  <rect x="14" y="128" width="30" height="66" rx="14" fill="#7d8c91"/><rect x="156" y="128" width="30" height="66" rx="14" fill="#7d8c91"/>
+  <rect x="40" y="118" width="120" height="40" rx="14" fill="#a5b2b6"/>
+  <path d="M58 176c0-36 18-50 40-50s40 14 40 50z" fill="#9b6f5f"/>
+  <ellipse cx="118" cy="168" rx="26" ry="10" fill="#d9d2c7"/><g fill="#e9a23b"><circle cx="108" cy="162" r="5"/><circle cx="118" cy="160" r="5"/><circle cx="128" cy="163" r="5"/></g>
+  <g class="head"><circle cx="94" cy="106" r="26" fill="#eab895"/>
+  <path d="M68 104c-2-24 14-32 28-31 18 0 28 10 25 31-4-6-6-14-12-14-4 8-14 6-18 2-6 6-16 6-23 12z" fill="#5a4636"/>
+  <g class="eyes" stroke="#16262b" stroke-width="3" stroke-linecap="round"><path d="M82 106h9"/><path d="M98 106h9"/></g>
+  <path d="M86 120h14" stroke="#16262b" stroke-width="3" stroke-linecap="round"/></g>
+  <rect x="64" y="150" width="22" height="9" rx="3" fill="#2a2f33" transform="rotate(-12 75 154)"/>
+  <g class="zz" font-family="Inter,sans-serif" font-weight="800" fill="#8a979c"><text x="128" y="78" font-size="18">z</text><text x="140" y="62" font-size="22">z</text><text x="154" y="44" font-size="27">Z</text></g>
+</svg><div><span class="tag tb2">Mr. Asleep</span><p class="nm">Starts at 35</p><b class="big g">$678K</b></div></div>
+    <div class="ch2"><svg viewBox="0 0 820 300"><line class="grid" x1="60" x2="800" y1="260.0" y2="260.0"/><text class="ax" x="48" y="266.0" text-anchor="end">$0</text><line class="grid" x1="60" x2="800" y1="138.0" y2="138.0"/><text class="ax" x="48" y="144.0" text-anchor="end">$1M</text><line class="grid" x1="60" x2="800" y1="16.0" y2="16.0"/><text class="ax" x="48" y="22.0" text-anchor="end">$2M</text><text class="ax" x="60.0" y="290" text-anchor="middle">25</text><text class="ax" x="245.0" y="290" text-anchor="middle">35</text><text class="ax" x="430.0" y="290" text-anchor="middle">45</text><text class="ax" x="615.0" y="290" text-anchor="middle">55</text><text class="ax" x="800.0" y="290" text-anchor="middle">65</text><path class="area gry fxa" d="M60.0 260.0 L78.5 260.0 L97.0 260.0 L115.5 260.0 L134.0 260.0 L152.5 260.0 L171.0 260.0 L189.5 260.0 L208.0 260.0 L226.5 260.0 L245.0 260.0 L263.5 259.5 L282.0 259.0 L300.5 258.5 L319.0 257.9 L337.5 257.2 L356.0 256.4 L374.5 255.6 L393.0 254.6 L411.5 253.6 L430.0 252.5 L448.5 251.3 L467.0 249.9 L485.5 248.4 L504.0 246.7 L522.5 244.8 L541.0 242.8 L559.5 240.5 L578.0 238.0 L596.5 235.3 L615.0 232.2 L633.5 228.8 L652.0 225.1 L670.5 221.0 L689.0 216.5 L707.5 211.4 L726.0 205.9 L744.5 199.8 L763.0 193.0 L781.5 185.5 L800.0 177.3 L800.0 260.0 L60.0 260.0 Z"/><path class="ln gry draw" pathLength="1" style="--d:0.6s" d="M60.0 260.0 L78.5 260.0 L97.0 260.0 L115.5 260.0 L134.0 260.0 L152.5 260.0 L171.0 260.0 L189.5 260.0 L208.0 260.0 L226.5 260.0 L245.0 260.0 L263.5 259.5 L282.0 259.0 L300.5 258.5 L319.0 257.9 L337.5 257.2 L356.0 256.4 L374.5 255.6 L393.0 254.6 L411.5 253.6 L430.0 252.5 L448.5 251.3 L467.0 249.9 L485.5 248.4 L504.0 246.7 L522.5 244.8 L541.0 242.8 L559.5 240.5 L578.0 238.0 L596.5 235.3 L615.0 232.2 L633.5 228.8 L652.0 225.1 L670.5 221.0 L689.0 216.5 L707.5 211.4 L726.0 205.9 L744.5 199.8 L763.0 193.0 L781.5 185.5 L800.0 177.3"/><circle class="pt gry endpt" cx="800.0" cy="177.3" r="8"/></svg></div>
+  </div>
+  <div class="card who a fx" style="--d:.3s">
+    <div class="top"><svg class="av av-a" viewBox="0 0 200 210" aria-label="Mr. Bold">
+  <circle cx="100" cy="108" r="96" fill="#dcefed"/>
+  <path d="M38 210c0-58 30-72 62-72s62 14 62 72z" fill="#0e7c7a"/>
+  <path d="M84 139l16 30 16-30z" fill="#fff"/><path d="M96 147l4 18 4-18z" fill="#c0573e"/>
+  <rect x="91" y="118" width="18" height="24" rx="6" fill="#e2ad88"/>
+  <circle cx="100" cy="94" r="31" fill="#eab895"/>
+  <path d="M68 92c-3-30 18-40 34-39 22 0 34 13 31 39-5-13-19-19-33-18-13 1-25 7-32 18z" fill="#24323a"/>
+  <g fill="rgba(255,255,255,.35)" stroke="#16262b" stroke-width="3"><rect x="79" y="88" width="18" height="13" rx="4"/><rect x="103" y="88" width="18" height="13" rx="4"/></g>
+  <path d="M97 94h6" stroke="#16262b" stroke-width="3"/>
+  <path class="glint" d="M83 91l5-1" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M89 111q11 8 22 0" fill="none" stroke="#16262b" stroke-width="3" stroke-linecap="round"/>
+  <g class="tab"><rect x="116" y="150" width="56" height="40" rx="6" fill="#fff" stroke="#16262b" stroke-width="3"/>
+  <path class="spark" pathLength="1" d="M123 182l10-8 9 4 10-11 12-9" fill="none" stroke="#0e7c7a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="120" cy="186" r="9" fill="#eab895"/></g>
+</svg><div><span class="tag ta2">Mr. Bold</span><p class="nm">Starts at 25</p><b class="big">$1.90M</b></div></div>
+    <div class="ch2"><svg viewBox="0 0 820 300"><line class="grid" x1="60" x2="800" y1="260.0" y2="260.0"/><text class="ax" x="48" y="266.0" text-anchor="end">$0</text><line class="grid" x1="60" x2="800" y1="138.0" y2="138.0"/><text class="ax" x="48" y="144.0" text-anchor="end">$1M</text><line class="grid" x1="60" x2="800" y1="16.0" y2="16.0"/><text class="ax" x="48" y="22.0" text-anchor="end">$2M</text><text class="ax" x="60.0" y="290" text-anchor="middle">25</text><text class="ax" x="245.0" y="290" text-anchor="middle">35</text><text class="ax" x="430.0" y="290" text-anchor="middle">45</text><text class="ax" x="615.0" y="290" text-anchor="middle">55</text><text class="ax" x="800.0" y="290" text-anchor="middle">65</text><path class="area tea fxa" d="M60.0 260.0 L78.5 259.5 L97.0 259.0 L115.5 258.5 L134.0 257.9 L152.5 257.2 L171.0 256.4 L189.5 255.6 L208.0 254.6 L226.5 253.6 L245.0 252.5 L263.5 251.3 L282.0 249.9 L300.5 248.4 L319.0 246.7 L337.5 244.8 L356.0 242.8 L374.5 240.5 L393.0 238.0 L411.5 235.3 L430.0 232.2 L448.5 228.8 L467.0 225.1 L485.5 221.0 L504.0 216.5 L522.5 211.4 L541.0 205.9 L559.5 199.8 L578.0 193.0 L596.5 185.5 L615.0 177.3 L633.5 168.1 L652.0 158.1 L670.5 146.9 L689.0 134.6 L707.5 121.0 L726.0 106.0 L744.5 89.5 L763.0 71.1 L781.5 50.9 L800.0 28.5 L800.0 260.0 L60.0 260.0 Z"/><path class="ln tea draw" pathLength="1" style="--d:0.9s" d="M60.0 260.0 L78.5 259.5 L97.0 259.0 L115.5 258.5 L134.0 257.9 L152.5 257.2 L171.0 256.4 L189.5 255.6 L208.0 254.6 L226.5 253.6 L245.0 252.5 L263.5 251.3 L282.0 249.9 L300.5 248.4 L319.0 246.7 L337.5 244.8 L356.0 242.8 L374.5 240.5 L393.0 238.0 L411.5 235.3 L430.0 232.2 L448.5 228.8 L467.0 225.1 L485.5 221.0 L504.0 216.5 L522.5 211.4 L541.0 205.9 L559.5 199.8 L578.0 193.0 L596.5 185.5 L615.0 177.3 L633.5 168.1 L652.0 158.1 L670.5 146.9 L689.0 134.6 L707.5 121.0 L726.0 106.0 L744.5 89.5 L763.0 71.1 L781.5 50.9 L800.0 28.5"/><circle class="pt tea endpt" cx="800.0" cy="28.5" r="8"/></svg></div>
+  </div>
+  <div class="band cost fx" style="--d:1.1s">Same <b>$300 a month</b>. Waiting 10 years cost <b>$1.22M</b>.</div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">Hypothetical: $300 a month at 10% a year, compounded monthly, to age 65. Not a specific investment. No fees or taxes. Actual returns vary.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-time">
+  <header class="hd"><div class="kicker fx">Stay invested</div><h2 class="split">Time <em>in</em> the market beats <em>timing</em> the market</h2></header>
+  <div class="bd">
+  <div class="lcol">
+    <div class="card why fx" style="--d:0.20s"><b>You have to be right twice</b><span>When to get out, and when to get back in.</span></div><div class="card why fx" style="--d:0.27s"><b>Emotion drives the timing</b><span>Fear sells low. Greed buys high.</span></div>
+  </div>
+  <div class="card plot int fx" id="tl" style="--d:.25s" data-tl='{"y": [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "a": [10000, 11462, 11695, 13145, 16727, 15630, 19742, 20622, 22078, 21738, 29153, 35059, 45931, 58181, 69544, 62492, 54343, 41643, 52628, 57360, 59081, 67127, 69497, 42748, 52772, 59516, 59516, 67497, 87476, 97440, 96729, 105957, 126533, 118638, 152900, 177762, 225562, 181713, 225742, 278362, 323986], "b": [10000, 11462, 11695, 13145, 16727, 15630, 15630, 16327, 17479, 17210, 17210, 20697, 27115, 34346, 41054, 36891, 36891, 36891, 36891, 40208, 41414, 47055, 48716, 29965, 29965, 33795, 33795, 38326, 49671, 55329, 54925, 54925, 65591, 61498, 61498, 71498, 90724, 73087, 73087, 90124, 104895], "out": [1991, 1995, 2001, 2002, 2003, 2009, 2016, 2019, 2023], "r": [14.62, 2.03, 12.4, 27.25, -6.56, 26.31, 4.46, 7.06, -1.54, 34.11, 20.26, 31.01, 26.67, 19.53, -10.14, -13.04, -23.37, 26.38, 8.99, 3.0, 13.62, 3.53, -38.49, 23.45, 12.78, 0.0, 13.41, 29.6, 11.39, -0.73, 9.54, 19.42, -6.24, 28.88, 16.26, 26.89, -19.44, 24.23, 23.31, 16.39]}'>
+    <div class="ctop"><div class="ch">$10,000 in the S&amp;P 500, 1986 to 2025</div><div class="zoom who"><button data-v="a" class="on">Stayed invested</button><button data-v="b">Sold low, bought high</button><button data-v="ab">Both</button></div></div>
+    <div class="readout2">
+      <div class="ra"><span class="kk">Stayed invested 40 years</span><b>$10,000 &rarr; $324K</b></div>
+      <div class="rb"><span class="kk">Sold low, bought high</span><b>$10,000 &rarr; $105K</b><em>Sold after every down year, bought back a year later.</em></div>
+    </div>
+    <div class="spwrap"><svg id="tlsvg" viewBox="0 0 1100 420"></svg><div id="tltip"></div></div>
+  </div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">S&amp;P 500 price returns, 1986 to 2025, dividends not included. Sold low, bought high: sells at the end of every down year, holds cash earning 0% for the next year, then buys back. Best and worst days: S&amp;P 500 daily closes, Jan 1986 to Nov 3, 2026. Hypothetical, no fees or taxes. Past performance does not guarantee future results.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-dca">
+  <header class="hd"><div class="kicker fx">Dollar cost averaging</div><h2 class="split">Same amount, <em>every month</em></h2></header>
+  <div class="bd">
+  <div class="lcol">
+    <p class="lead fx" style="--d:.15s">Invest the same amount every month. When prices drop, <b>you buy more shares.</b></p>
+    <div class="tiles">
+      <div class="card tl fx" style="--d:0.40s"><span class="kk">Average price</span><b>$16.83</b></div>
+      <div class="card tl hi fx" style="--d:0.47s"><span class="kk">Your average cost</span><b>$15.32</b></div>
+    </div>
+    <div class="band sm fx" style="--d:.8s">The price ended <b>15% lower</b>, <b>but you made a profit.</b></div>
+  </div>
+  <div class="card plot fx" style="--d:.2s"><svg viewBox="0 0 1040 700"><text class="kk2" x="20" y="30">Price per share, month by month</text><path class="area" d="M70.0 174.2 L79.1 170.0 L88.2 170.6 L97.3 147.3 L106.4 165.7 L115.6 137.8 L124.7 137.8 L133.8 138.6 L142.9 118.5 L152.0 111.7 L161.1 132.8 L170.2 141.4 L179.3 170.4 L188.4 185.7 L197.6 184.5 L206.7 182.0 L215.8 220.0 L224.9 227.1 L234.0 236.7 L243.1 224.3 L252.2 202.6 L261.3 202.4 L270.4 199.7 L279.6 163.1 L288.7 192.2 L297.8 153.2 L306.9 156.6 L316.0 142.9 L325.1 162.4 L334.2 182.0 L343.3 192.2 L352.4 184.2 L361.6 226.8 L370.7 223.0 L379.8 236.0 L388.9 256.0 L398.0 267.9 L407.1 257.9 L416.2 262.3 L425.3 257.6 L434.4 244.2 L443.6 213.5 L452.7 215.2 L461.8 208.6 L470.9 192.5 L480.0 184.6 L489.1 196.9 L498.2 213.6 L507.3 207.6 L516.4 221.9 L525.6 254.0 L534.7 251.1 L543.8 264.9 L552.9 271.3 L562.0 288.8 L571.1 275.9 L580.2 276.5 L589.3 241.9 L598.4 269.0 L607.6 246.1 L616.7 223.0 L625.8 234.2 L634.9 214.8 L644.0 205.4 L653.1 218.4 L662.2 212.0 L671.3 212.3 L680.4 225.3 L689.6 217.4 L698.7 247.5 L707.8 240.2 L716.9 250.2 L726.0 257.5 L735.1 245.8 L744.2 238.0 L753.3 212.8 L762.4 195.8 L771.6 206.6 L780.7 188.5 L789.8 197.5 L798.9 171.0 L808.0 163.8 L817.1 170.7 L826.2 167.7 L835.3 178.7 L844.4 210.5 L853.6 215.2 L862.7 212.6 L871.8 242.6 L880.9 238.4 L890.0 247.1 L899.1 247.7 L908.2 249.1 L917.3 250.7 L926.4 216.5 L935.6 240.7 L944.7 229.3 L953.8 217.9 L962.9 204.2 L972.0 205.4 L972.0 320.0 L70.0 320.0 Z"/><line class="ref" x1="70" x2="972" y1="174.2" y2="174.2"/><path class="ln ink draw" pathLength="1" style="--d:.3s" d="M70.0 174.2 L79.1 170.0 L88.2 170.6 L97.3 147.3 L106.4 165.7 L115.6 137.8 L124.7 137.8 L133.8 138.6 L142.9 118.5 L152.0 111.7 L161.1 132.8 L170.2 141.4 L179.3 170.4 L188.4 185.7 L197.6 184.5 L206.7 182.0 L215.8 220.0 L224.9 227.1 L234.0 236.7 L243.1 224.3 L252.2 202.6 L261.3 202.4 L270.4 199.7 L279.6 163.1 L288.7 192.2 L297.8 153.2 L306.9 156.6 L316.0 142.9 L325.1 162.4 L334.2 182.0 L343.3 192.2 L352.4 184.2 L361.6 226.8 L370.7 223.0 L379.8 236.0 L388.9 256.0 L398.0 267.9 L407.1 257.9 L416.2 262.3 L425.3 257.6 L434.4 244.2 L443.6 213.5 L452.7 215.2 L461.8 208.6 L470.9 192.5 L480.0 184.6 L489.1 196.9 L498.2 213.6 L507.3 207.6 L516.4 221.9 L525.6 254.0 L534.7 251.1 L543.8 264.9 L552.9 271.3 L562.0 288.8 L571.1 275.9 L580.2 276.5 L589.3 241.9 L598.4 269.0 L607.6 246.1 L616.7 223.0 L625.8 234.2 L634.9 214.8 L644.0 205.4 L653.1 218.4 L662.2 212.0 L671.3 212.3 L680.4 225.3 L689.6 217.4 L698.7 247.5 L707.8 240.2 L716.9 250.2 L726.0 257.5 L735.1 245.8 L744.2 238.0 L753.3 212.8 L762.4 195.8 L771.6 206.6 L780.7 188.5 L789.8 197.5 L798.9 171.0 L808.0 163.8 L817.1 170.7 L826.2 167.7 L835.3 178.7 L844.4 210.5 L853.6 215.2 L862.7 212.6 L871.8 242.6 L880.9 238.4 L890.0 247.1 L899.1 247.7 L908.2 249.1 L917.3 250.7 L926.4 216.5 L935.6 240.7 L944.7 229.3 L953.8 217.9 L962.9 204.2 L972.0 205.4"/><circle class="pt tea" cx="70" cy="174.2" r="7"/><text class="vl up" x="70" y="156.2" text-anchor="middle">$20</text><circle class="pt tea" cx="152" cy="111.7" r="7"/><text class="vl up" x="152" y="93.7" text-anchor="middle">$26</text><circle class="pt rst" cx="234" cy="236.7" r="7"/><text class="vl dnf" x="234" y="270.7" text-anchor="middle">$14</text><circle class="pt tea" cx="316" cy="142.9" r="7"/><text class="vl up" x="316" y="124.9" text-anchor="middle">$23</text><circle class="pt rst" cx="398" cy="267.9" r="7"/><text class="vl dnf" x="398" y="301.9" text-anchor="middle">$11</text><circle class="pt tea" cx="480" cy="184.6" r="7"/><text class="vl up" x="480" y="166.6" text-anchor="middle">$19</text><circle class="pt rst" cx="562" cy="288.8" r="7"/><text class="vl dnf" x="562" y="322.8" text-anchor="middle">$9</text><circle class="pt tea" cx="644" cy="205.4" r="7"/><text class="vl up" x="644" y="187.4" text-anchor="middle">$17</text><circle class="pt rst" cx="726" cy="257.5" r="7"/><text class="vl dnf" x="726" y="291.5" text-anchor="middle">$12</text><circle class="pt tea" cx="808" cy="163.8" r="7"/><text class="vl up" x="808" y="145.8" text-anchor="middle">$21</text><circle class="pt rst" cx="890" cy="247.1" r="7"/><text class="vl dnf" x="890" y="281.1" text-anchor="middle">$13</text><circle class="pt tea" cx="972" cy="205.4" r="7"/><text class="vl up" x="972" y="187.4" text-anchor="middle">$17</text><text class="kk2" x="20" y="420">Shares your $300 buys</text><rect class="sb gr" style="--d:0.60s" x="40" y="558.0" width="60" height="102.0" rx="4"/><text class="vl sm2" x="70" y="548.0" text-anchor="middle">15.0</text><text class="ax" x="70" y="690" text-anchor="middle">Jan</text><rect class="sb gr" style="--d:0.66s" x="122" y="581.5" width="60" height="78.5" rx="4"/><text class="vl sm2" x="152" y="571.5" text-anchor="middle">11.5</text><text class="ax" x="152" y="690" text-anchor="middle">Feb</text><rect class="sb gr" style="--d:0.72s" x="204" y="514.3" width="60" height="145.7" rx="4"/><text class="vl sm2" x="234" y="504.3" text-anchor="middle">21.4</text><text class="ax" x="234" y="690" text-anchor="middle">Mar</text><rect class="sb gr" style="--d:0.78s" x="286" y="571.3" width="60" height="88.7" rx="4"/><text class="vl sm2" x="316" y="561.3" text-anchor="middle">13.0</text><text class="ax" x="316" y="690" text-anchor="middle">Apr</text><rect class="sb gr" style="--d:0.84s" x="368" y="474.5" width="60" height="185.5" rx="4"/><text class="vl sm2" x="398" y="464.5" text-anchor="middle">27.3</text><text class="ax" x="398" y="690" text-anchor="middle">May</text><rect class="sb gr" style="--d:0.90s" x="450" y="552.6" width="60" height="107.4" rx="4"/><text class="vl sm2" x="480" y="542.6" text-anchor="middle">15.8</text><text class="ax" x="480" y="690" text-anchor="middle">Jun</text><rect class="sb gr" style="--d:0.96s" x="532" y="433.3" width="60" height="226.7" rx="4"/><text class="vl sm2" x="562" y="423.3" text-anchor="middle">33.3</text><text class="ax" x="562" y="690" text-anchor="middle">Jul</text><rect class="sb gr" style="--d:1.02s" x="614" y="540.0" width="60" height="120.0" rx="4"/><text class="vl sm2" x="644" y="530.0" text-anchor="middle">17.6</text><text class="ax" x="644" y="690" text-anchor="middle">Aug</text><rect class="sb gr" style="--d:1.08s" x="696" y="490.0" width="60" height="170.0" rx="4"/><text class="vl sm2" x="726" y="480.0" text-anchor="middle">25.0</text><text class="ax" x="726" y="690" text-anchor="middle">Sep</text><rect class="sb gr" style="--d:1.14s" x="778" y="562.9" width="60" height="97.1" rx="4"/><text class="vl sm2" x="808" y="552.9" text-anchor="middle">14.3</text><text class="ax" x="808" y="690" text-anchor="middle">Oct</text><rect class="sb gr" style="--d:1.20s" x="860" y="503.1" width="60" height="156.9" rx="4"/><text class="vl sm2" x="890" y="493.1" text-anchor="middle">23.1</text><text class="ax" x="890" y="690" text-anchor="middle">Nov</text><rect class="sb gr" style="--d:1.26s" x="942" y="540.0" width="60" height="120.0" rx="4"/><text class="vl sm2" x="972" y="530.0" text-anchor="middle">17.6</text><text class="ax" x="972" y="690" text-anchor="middle">Dec</text></svg></div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">Hypothetical: $300 a month for 12 months. Prices are made up for illustration. Dollar cost averaging does not guarantee a profit or protect against loss in a falling market.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-dca2">
+  <header class="hd"><div class="kicker fx">Dollar cost averaging</div><h2 class="split">Keep buying through <em>the storms</em></h2></header>
+  <div class="bd">
+  <div class="stats">
+    <div class="card st fx" style="--d:0.15s"><span class="kk">$300 a month, put in</span><b>$93,600</b></div>
+    <div class="card st hi fx" style="--d:0.22s"><span class="kk">Value at the end of 2025</span><b>$525K</b></div>
+  </div>
+  <div class="card plot int fx" id="dc" style="--d:.3s" data-dc='{"m": [299, 582, 914, 1228, 1480, 1831, 2142, 2458, 2720, 2854, 3120, 3297, 3616, 3836, 3764, 4086, 4692, 4877, 5044, 5240, 4920, 5391, 5983, 6381, 6649, 6703, 7336, 7354, 7424, 7252, 6725, 7090, 7023, 7207, 7987, 8184, 8501, 8270, 8718, 9534, 10401, 11360, 11781, 12113, 12861, 13487, 14014, 14818, 15843, 16296, 16313, 16751, 16590, 17348, 17227, 17258, 18020, 18311, 19472, 20282, 20271, 20883, 21094, 20843, 21389, 22124, 22791, 23123, 23449, 23085, 24269, 25053, 25755, 26080, 26803, 27350, 27463, 27041, 27567, 28536, 29598, 31014, 31977, 33009, 33519, 34337, 33758, 35461, 36952, 37359, 37853, 36525, 37933, 39352, 37720, 38463, 36312, 36158, 35615, 37563, 38962, 37717, 35817, 36996, 35596, 28719, 26583, 26850, 26778, 25189, 23965, 27181, 29238, 30313, 30932, 33698, 35168, 36252, 37249, 38317, 39169, 38352, 40981, 43006, 40789, 39661, 39925, 40601, 42310, 44596, 46053, 48116, 50100, 51997, 51722, 53186, 53846, 52167, 54099, 48736, 48642, 50413, 51604, 52704, 55509, 58104, 60061, 60309, 58703, 58288, 60265, 62582, 64749, 64872, 63282, 64924, 68120, 70133, 72473, 73956, 77788, 77347, 80314, 80956, 82366, 84563, 88295, 90105, 91138, 91175, 93818, 94160, 95756, 98973, 100603, 100316, 102246, 99671, 105512, 106318, 105385, 108626, 108935, 110143, 111471, 111229, 111383, 108914, 104223, 108971, 112412, 111403, 104569, 104327, 111333, 114848, 114851, 116433, 120645, 122459, 122283, 122023, 125788, 128671, 131496, 136927, 137402, 139185, 141335, 142554, 145861, 146484, 149867, 153754, 158645, 160774, 170402, 164321, 160458, 161459, 165525, 166901, 173508, 179361, 180728, 168740, 172340, 157052, 170017, 175674, 179428, 187106, 175373, 188096, 191188, 188338, 192200, 196762, 204113, 210608, 210885, 193716, 169999, 192192, 201514, 205838, 217829, 233766, 225226, 219619, 243941, 253693, 251463, 258639, 270247, 285067, 287273, 294311, 301670, 311092, 296931, 318159, 316179, 330673, 313998, 304856, 316505, 289335, 290046, 266343, 291337, 279642, 254142, 275139, 290640, 274159, 291807, 284869, 295569, 300612, 302073, 322387, 333191, 328032, 312766, 306604, 334731, 350328, 356610, 375801, 388212, 372773, 391440, 405787, 411155, 421334, 430645, 427170, 452485, 441977, 454710, 449003, 423900, 421413, 448133, 471178, 482204, 492226, 510464, 522905, 524440, 525023], "y0": 2000}'>
+    <div class="ctop"><div class="ch">Account value, <span id="dcrange">2000 to 2025</span></div></div>
+    <div class="spwrap"><svg id="dcsvg" viewBox="0 0 1680 430"></svg><div id="dctip"></div></div>
+  </div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">S&amp;P 500 total returns (dividends reinvested), Jan 2000 to Dec 2025. Modeled as $300 at the start of every month, using real month-by-month moves, scaled to each year's total return. Shaded bands mark the crash periods. Hover the chart to see any month. No fees or taxes. Past performance does not guarantee future results.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-div">
+  <header class="hd"><div class="kicker fx">Diversification</div><h2 class="split">Don't bet it all on <em>one thing</em></h2></header>
+  <div class="bd">
+  <div class="lcol">
+    <div class="card fx" style="--d:.15s"><div class="ch">What it means</div><p>Spread your money across things that <b>don't move together.</b></p></div>
+    <div class="card fx" style="--d:.22s"><div class="ch">Why it matters</div>
+      <ul class="dots"><li><b>One bad pick</b> can't sink the whole plan.</li></ul></div>
+  </div>
+  <div class="card yr fx" style="--d:.2s">
+    <div class="ch">2008: same year, different results</div>
+    <div class="dv"><div class="zero"></div>
+      <div class="c"><span class="v up">+5.2%</span><i class="up gr" style="--d:.5s;height:26px"></i><em>U.S. bonds</em></div>
+      <div class="c"><em class="t">U.S. stocks</em><i class="dn grd" style="--d:.4s;height:192px"></i><span class="v dn">-38.5%</span></div>
+    </div>
+  </div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">Stocks: S&amp;P 500 price return, dividends not included. Bonds: Bloomberg U.S. Aggregate Bond Index. Diversification does not guarantee a profit or protect against loss.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-alloc">
+  <header class="hd"><div class="kicker fx">Asset allocation</div><h2 class="split">How you <em>split it</em></h2></header>
+  <div class="bd">
+  <div class="lcol">
+    <div class="card kd fx" style="--d:0.15s"><b class="stk">Stock</b><div><p class="t">You <b>own a slice</b> of a company.</p><p>More growth, bigger swings.</p></div></div>
+    <div class="card kd fx" style="--d:0.22s"><b class="bnd">Bond</b><div><p class="t">You <b>lend money</b> and get interest.</p><p>Steadier, slower.</p></div></div>
+    <div class="card kd fx" style="--d:0.29s"><b class="csh">Cash</b><div><p class="t">Savings and CDs.</p><p>Safe, but barely beats inflation.</p></div></div>
+  </div>
+  <div class="card mixes fx" style="--d:.3s">
+    <div class="ch">Sample mixes</div>
+    <div class="key"><span><i class="stk"></i>Stocks</span><span><i class="bnd"></i>Bonds</span><span><i class="csh"></i>Cash</span></div>
+    <div class="dns">
+      <div><svg viewBox="0 0 220 220"><g transform="rotate(-90 110 110)"><circle class="seg stk" cx="110" cy="110" r="80" stroke-dasharray="399.1 502.7" stroke-dashoffset="0.0"/><circle class="seg bnd" cx="110" cy="110" r="80" stroke-dasharray="72.4 502.7" stroke-dashoffset="-402.1"/><circle class="seg csh" cx="110" cy="110" r="80" stroke-dasharray="22.1 502.7" stroke-dashoffset="-477.5"/></g><text x="110" y="121" text-anchor="middle" class="dc">80/15</text></svg><b>Growth</b></div>
+      <div><svg viewBox="0 0 220 220"><g transform="rotate(-90 110 110)"><circle class="seg stk" cx="110" cy="110" r="80" stroke-dasharray="298.6 502.7" stroke-dashoffset="0.0"/><circle class="seg bnd" cx="110" cy="110" r="80" stroke-dasharray="172.9 502.7" stroke-dashoffset="-301.6"/><circle class="seg csh" cx="110" cy="110" r="80" stroke-dasharray="22.1 502.7" stroke-dashoffset="-477.5"/></g><text x="110" y="121" text-anchor="middle" class="dc">60/35</text></svg><b>Balanced</b></div>
+      <div><svg viewBox="0 0 220 220"><g transform="rotate(-90 110 110)"><circle class="seg stk" cx="110" cy="110" r="80" stroke-dasharray="147.8 502.7" stroke-dashoffset="0.0"/><circle class="seg bnd" cx="110" cy="110" r="80" stroke-dasharray="298.6 502.7" stroke-dashoffset="-150.8"/><circle class="seg csh" cx="110" cy="110" r="80" stroke-dasharray="47.3 502.7" stroke-dashoffset="-452.4"/></g><text x="110" y="121" text-anchor="middle" class="dc">30/60</text></svg><b>Conservative</b></div>
+    </div>
+  </div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">Sample mixes are for illustration only, not recommendations. The right mix depends on your goals, time, and risk tolerance.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-funds">
+  <header class="hd"><div class="kicker fx">Stocks vs. mutual funds</div><h2 class="split">One player or <em>the whole team?</em></h2></header>
+  <div class="bd">
+  <div class="vsrow2">
+    <div class="card side1 fx" style="--d:.15s"><svg class="elev one" viewBox="0 0 200 230" aria-label="One stock: one cable">
+  <defs><clipPath id="shaft1"><rect x="0" y="22" width="200" height="208"/></clipPath></defs>
+  <rect class="shaft" x="52" y="22" width="96" height="200" rx="6"/>
+  <g clip-path="url(#shaft1)"><g class="car c1">
+    <line class="cable solo" x1="100" y1="-300" x2="100" y2="78"/>
+    <rect class="box" x="62" y="78" width="76" height="92" rx="8"/>
+    <line class="door" x1="100" y1="92" x2="100" y2="166"/>
+    <rect class="lamp" x="86" y="84" width="28" height="7" rx="3"/>
+    <text x="100" y="138" text-anchor="middle" class="lbl">1</text>
+  </g></g>
+  <rect class="beam" x="40" y="10" width="120" height="14" rx="4"/>
+  <circle class="pulley" cx="100" cy="17" r="9"/>
+</svg><div><span class="tag">Stock</span><p class="big">Buy one company.</p><p class="sm">One cable. If it snaps, you feel it all.</p></div></div>
+    <div class="vsb fx" style="--d:.45s"><span>VS</span></div>
+    <div class="card side2 fx" style="--d:.3s"><svg class="elev many" viewBox="0 0 200 230" aria-label="Mutual fund: many cables">
+  <defs><clipPath id="shaft2"><rect x="0" y="22" width="200" height="208"/></clipPath></defs>
+  <rect class="shaft" x="30" y="22" width="140" height="200" rx="6"/>
+  <g clip-path="url(#shaft2)"><g class="car c2"><line class="cable" style="--i:0" x1="52.0" y1="-300" x2="52.0" y2="96"/><line class="cable" style="--i:1" x1="65.7" y1="-300" x2="65.7" y2="96"/><line class="cable" style="--i:2" x1="79.4" y1="-300" x2="79.4" y2="96"/><line class="cable" style="--i:3" x1="93.1" y1="-300" x2="93.1" y2="96"/><line class="cable" style="--i:4" x1="106.8" y1="-300" x2="106.8" y2="96"/><line class="cable snap" style="--i:5" x1="120.5" y1="-300" x2="120.5" y2="96"/><line class="cable" style="--i:6" x1="134.2" y1="-300" x2="134.2" y2="96"/><line class="cable" style="--i:7" x1="147.9" y1="-300" x2="147.9" y2="96"/>
+    <rect class="box" x="44" y="96" width="112" height="92" rx="8"/>
+    <line class="door" x1="100" y1="110" x2="100" y2="184"/>
+    <rect class="lamp" x="86" y="102" width="28" height="7" rx="3"/>
+    <text x="100" y="156" text-anchor="middle" class="lbl">100s</text>
+  </g></g>
+  <rect class="beam" x="22" y="10" width="156" height="14" rx="4"/><circle class="pulley sm" cx="52.0" cy="17" r="4.5"/><circle class="pulley sm" cx="65.7" cy="17" r="4.5"/><circle class="pulley sm" cx="79.4" cy="17" r="4.5"/><circle class="pulley sm" cx="93.1" cy="17" r="4.5"/><circle class="pulley sm" cx="106.8" cy="17" r="4.5"/><circle class="pulley sm" cx="120.5" cy="17" r="4.5"/><circle class="pulley sm" cx="134.2" cy="17" r="4.5"/><circle class="pulley sm" cx="147.9" cy="17" r="4.5"/>
+</svg><div><span class="tag t2">Mutual fund</span><p class="big">Buy the whole basket.</p><p class="sm">Many cables. One snaps, the rest hold.</p></div></div>
+  </div>
+  <div class="card cmp fx" style="--d:.7s">
+    <div class="ch3"><span></span><span class="a">Stock</span><span class="b">Mutual fund</span></div>
+    <div class="cr fx" style="--d:0.90s"><span class="cl">What you own</span><span class="a">One company</span><span class="b">Hundreds of companies</span></div>
+  </div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">General education, not a recommendation of any security or fund. Mutual funds carry fees, including an expense ratio, and risks; read the prospectus. Diversification does not guarantee a profit or protect against loss.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-risk">
+  <header class="hd"><div class="kicker fx">Risk tolerance</div><h2 class="split">How much market volatility <em>are you willing to take?</em></h2></header>
+  <div class="bd">
+  <div class="card ask fx" style="--d:.15s"><div class="ch">Gut check</div>
+    <p class="q">Your <b>$100,000</b> drops to <b class="dn">$70,000</b> in one year. What do you do?</p>
+    <div class="opts"><span>Sell</span><span>Hold</span><span>Buy more</span></div></div>
+  <div class="card abil fx" style="--d:.3s"><div class="ch">Ability</div>
+    <p class="q">Can you <b>afford to ride out</b> the down years?</p>
+    </div>
+  <div class="spec fx" style="--d:.4s"><div class="track"><i></i></div><div class="ends"><span>Conservative</span><span>Moderate</span><span>Aggressive</span></div></div>
+  <div class="band sm fx" style="--d:.6s">Pick a plan <b>you'll stick with.</b></div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src"></span><span class="pn"></span></footer>
+</section>
+<section class="slide s-tax">
+  <header class="hd"><div class="kicker fx">Taxes</div><h2 class="split">3 ways your money <em>is taxed</em></h2></header>
+  <div class="bd">
+  <div class="card tx fx" style="--d:0.15s"><span class="kk">Tax every year</span><h3>Taxable</h3>
+    <div class="ex"><span>Brokerage account</span><span>Savings &amp; CDs</span></div>
+    <ul class="pc"><li class="p">Take it out anytime</li><li class="c">Taxed every year</li></ul></div>
+  <div class="card tx fx" style="--d:0.22s"><span class="kk">Tax later</span><h3>Tax deferred</h3>
+    <div class="ex"><span>Traditional 401(k)</span><span>Traditional IRA</span></div>
+    <ul class="pc"><li class="p">Lower taxes today</li><li class="c">Taxed as <i>income</i> when you take it out</li></ul></div>
+  <div class="card tx hi fx" style="--d:0.29s"><span class="kk">Tax-free growth</span><h3>Tax exempt</h3>
+    <div class="rws">
+      <div><b>Roth IRA &amp; Roth 401(k)</b><span class="p">Tax-free out after 59&frac12;</span></div>
+      <div><b>HSA</b><span class="p">Triple tax free</span></div>
+    </div></div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">General education, not tax advice. Rules and limits change. Talk to a tax professional about your situation.</span><span class="pn"></span></footer>
+</section>
+<section class="slide s-plan">
+  <header class="hd"><div class="kicker fx">Your next step</div><h2 class="split">The value of having <em>a plan</em></h2></header>
+  <div class="bd">
+  <div class="lcol">
+    <p class="quote fx" style="--d:.12s">A goal without a plan is just a wish.</p>
+    <div class="card fx" style="--d:.2s"><div class="ch">A portfolio check up looks at</div>
+      <div class="cks"><div class="fx" style="--d:0.30s"><svg class="ic ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><div><b>Where you stand</b><span>What you own, what you owe.</span></div></div><div class="fx" style="--d:0.35s"><svg class="ic ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><div><b>On track?</b><span>Your goal and your gap.</span></div></div><div class="fx" style="--d:0.40s"><svg class="ic ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><div><b>Tax buckets</b><span>The right mix of all three.</span></div></div></div></div>
+  </div>
+  <div class="card contact fx" style="--d:.35s">
+    <div class="ch">Let's talk</div>
+    
+    <div class="ci"><svg class="ic" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg><div><span class="kk">Cell</span><b>(310) 982-0073</b></div></div>
+    <div class="ci"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1"/></svg><div><span class="kk">Instagram</span><b>@oliviasulawang</b></div></div>
+  </div></div>
+  <footer class="ft"><span>Investing 101</span><span class="src">For education only. Not investment, tax, or legal advice. Examples are hypothetical. Past performance does not guarantee future results.</span><span class="pn"></span></footer>
+</section>
+</div><div id="bar"><i></i></div>
+<script>const stage = document.getElementById('stage');
+const slides = [...document.querySelectorAll('.slide')];
+const bar = document.querySelector('#bar i');
+const root = document.documentElement;
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let idx = -1;
+
+// split headlines into letters (keeps <em> accents intact)
+document.querySelectorAll('.split').forEach(el => {
+  let i = 0;
+  const walk = node => [...node.childNodes].forEach(n => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(w => {
+        if (!w) return;
+        if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); return; }
+        const ws = document.createElement('span'); ws.className = 'wd';
+        [...w].forEach(c => { const cs = document.createElement('span'); cs.className = 'lt'; cs.style.setProperty('--i', i++); cs.textContent = c; ws.appendChild(cs); });
+        frag.appendChild(ws);
+      });
+      n.replaceWith(frag);
+    } else if (n.nodeType === 1) walk(n);
+  });
+  walk(el);
+});
+
+slides.forEach((s, i) => { const pn = s.querySelector('.pn'); if (pn) pn.textContent = i + 1; });
+
+// numbers count up when their slide opens
+const NUMS = '.call>b,.st b,.tl b,.s-stand .bc span,.s-infl .ib span,.s-div .r2 b,.s-div .dv .v,.s-title .chip b,.s-plan .ci b.none';
+function countUp(s) {
+  if (RM) return;
+  s.querySelectorAll(NUMS).forEach(el => {
+    if (el.closest('.nocount')) return;
+    const src = el.dataset.src || (el.dataset.src = el.textContent);
+    const m = src.match(/^([^0-9]*)([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/);
+    if (!m) return;
+    const to = parseFloat(m[2].replace(/,/g, '')), dec = (m[2].split('.')[1] || '').length, comma = m[2].includes(',');
+    const t0 = performance.now() + 450, dur = 1400;
+    const tick = now => {
+      const k = Math.min(1, Math.max(0, (now - t0) / dur)), e = 1 - Math.pow(1 - k, 3);
+      let v = (to * e).toFixed(dec);
+      if (comma) v = Number(v).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+      el.textContent = m[1] + v + m[3];
+      if (k < 1 && s.classList.contains('active')) requestAnimationFrame(tick); else el.textContent = src;
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
+// interactive S&P 500 chart: zoom buttons, hover a bar for its year, stats follow the zoom
+(function () {
+  const box = document.getElementById('sp');
+  if (!box) return;
+  const D = JSON.parse(box.dataset.sp), svg = document.getElementById('spsvg'), tip = document.getElementById('sptip');
+  const W = 1240, H = 540, L = 70, R = 14, T = 64, B = 46, NS = 'http://www.w3.org/2000/svg';
+  const zy = r => T + (40 - r) / 80 * (H - T - B);
+  const el = (tag, at, txt) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; return e; };
+  const pct = r => (r > 0 ? '+' : '') + r.toFixed(2) + '%';
+  const $ = id => document.getElementById(id) || document.createElement('i');
+  let view = null;
+
+  function stats(ys, rs) {
+    const n = rs.length, up = rs.filter(r => r > 0).length;
+    let streak = 0, run = 0;
+    rs.forEach(r => { run = r < 0 ? run + 1 : 0; streak = Math.max(streak, run); });
+    const grow = rs.reduce((v, r) => v * (1 + r / 100), 10000), cagr = Math.pow(grow / 10000, 1 / n) - 1;
+    $('spup').textContent = `${up} of ${n}`;
+    $('spstreak').textContent = streak ? `Longest down streak: ${streak} year${streak > 1 ? 's' : ''}` : 'No down years in this stretch';
+    const rt = D.rt.slice(-n), cagrT = Math.pow(rt.reduce((v, r) => v * (1 + r / 100), 1), 1 / n) - 1;
+    $('spavg').textContent = `${(cagr * 100).toFixed(1)}% - ${(cagrT * 100).toFixed(1)}%`;
+    $('sprange').textContent = `${ys[0]} to ${ys[n - 1]}`;
+    const bi = rs.indexOf(Math.max(...rs)), wi = rs.indexOf(Math.min(...rs));
+    $('spbest').textContent = pct(rs[bi]); $('spbesty').textContent = `in ${ys[bi]}`;
+    $('spworst').textContent = pct(rs[wi]); $('spworsty').textContent = `in ${ys[wi]}`;
+    box.parentElement.querySelectorAll('.stats .st b').forEach(c => { c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); });
+  }
+
+  function draw(n) {
+    const ys = D.y.slice(-n), rs = D.r.slice(-n), bw = (W - L - R) / n, gap = Math.min(8, bw * .18);
+    const cx = i => L + i * bw + bw / 2;
+    svg.textContent = '';
+    [-40, -20, 0, 20, 40].forEach(t => {
+      svg.append(el('line', { class: 'grid' + (t === 0 ? ' zero' : ''), x1: L, x2: W - R, y1: zy(t), y2: zy(t) }));
+      svg.append(el('text', { class: 'ax', x: L - 12, y: zy(t) + 6, 'text-anchor': 'end' }, (t > 0 ? '+' : '') + t + '%'));
+    });
+    const step = n <= 5 ? 1 : n <= 10 ? 1 : n <= 20 ? 2 : 5;
+    ys.forEach((y, i) => { if ((ys[n - 1] - y) % step === 0) svg.append(el('text', { class: 'ax', x: cx(i), y: H - 12, 'text-anchor': 'middle' }, y)); });
+    const bars = el('g', {});
+    rs.forEach((r, i) => {
+      const top = r >= 0 ? zy(r) : zy(0), h = Math.max(Math.abs(zy(r) - zy(0)), 2);
+      bars.append(el('rect', { class: `b6 ${r >= 0 ? 'up gr' : 'dn grd'}`, style: `--d:${(i * Math.min(.03, .9 / n)).toFixed(3)}s`, x: L + i * bw + gap / 2, y: top, width: bw - gap, height: h, rx: Math.min(4, bw / 8) }));
+    });
+    svg.append(bars);
+    if (n <= 10) rs.forEach((r, i) => svg.append(el('text', { class: 'vl sm fade', x: cx(i), y: r >= 0 ? zy(r) - 10 : zy(r) + 24, 'text-anchor': 'middle' }, pct(r).replace('.00', ''))));
+    else D.notes.forEach(([y, t1, t2, where]) => {
+      const i = ys.indexOf(y);
+      if (i < 0) return;
+      const r = rs[i], g = el('g', { class: 'fade' });
+      let x = cx(i), ty, anchor = 'middle';
+      if (where === 'top') {
+        g.append(el('line', { class: 'lead', x1: x, x2: x, y1: 44, y2: zy(r) - 6 }));
+        ty = 14; anchor = i < n / 2 ? 'start' : 'end'; x += anchor === 'start' ? -10 : 10;
+      } else if (where === 'side') { ty = zy(-30); x += bw / 2 + 8; anchor = 'start'; }
+      else ty = zy(r) + 30;
+      g.append(el('text', { class: 'an', x, y: ty, 'text-anchor': anchor }, t1));
+      g.append(el('text', { class: 'an2', x, y: ty + 22, 'text-anchor': anchor }, t2));
+      svg.append(g);
+    });
+    const guide = el('line', { class: 'guide', x1: 0, x2: 0, y1: T - 20, y2: H - B });
+    svg.append(guide);
+    const hit = el('rect', { x: L, y: 0, width: W - L - R, height: H - B, fill: 'transparent' });
+    svg.append(hit);
+    view = { ys, rs, bw, cx, guide, n };
+    stats(ys, rs);
+  }
+
+  function hover(e) {
+    if (!view) return;
+    const p = svg.getBoundingClientRect(), sx = (e.touches ? e.touches[0].clientX : e.clientX) - p.left;
+    const x = sx / p.width * W, i = Math.max(0, Math.min(view.n - 1, Math.floor((x - L) / view.bw)));
+    const r = view.rs[i], gx = view.cx(i);
+    view.guide.setAttribute('x1', gx); view.guide.setAttribute('x2', gx); view.guide.classList.add('on');
+    svg.querySelectorAll('.b6').forEach((b, k) => b.classList.toggle('dim', k !== i));
+    tip.innerHTML = `<b>${view.ys[i]}</b><span class="${r >= 0 ? 'up' : 'dn'}">${pct(r)}</span>`;
+    tip.style.left = (gx / W * 100) + '%';
+    tip.classList.add('on');
+  }
+  function leave() {
+    if (!view) return;
+    view.guide.classList.remove('on'); tip.classList.remove('on');
+    svg.querySelectorAll('.b6').forEach(b => b.classList.remove('dim'));
+  }
+  svg.addEventListener('mousemove', hover);
+  svg.addEventListener('touchmove', hover, { passive: true });
+  svg.addEventListener('mouseleave', leave);
+  box.querySelectorAll('.zoom button').forEach(b => b.addEventListener('click', () => {
+    box.querySelectorAll('.zoom button').forEach(x => x.classList.toggle('on', x === b));
+    leave(); draw(+b.dataset.n);
+  }));
+  draw(40);
+})();
+
+// live debt clocks: value = snapshot + rate x seconds since the snapshot
+const ticks = [...document.querySelectorAll('.tick')];
+if (ticks.length) (function loop() {
+  const now = Date.now();
+  ticks.forEach(el => {
+    const v = +el.dataset.v + +el.dataset.r * (now - +el.dataset.t0) / 1000, dec = +el.dataset.dec;
+    el.textContent = '$' + v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  });
+  setTimeout(loop, 90);
+})();
+
+// interactive dollar cost averaging chart: every year labeled, hover for value vs. what you put in
+(function () {
+  const box = document.getElementById('dc');
+  if (!box) return;
+  const D = JSON.parse(box.dataset.dc), svg = document.getElementById('dcsvg'), tip = document.getElementById('dctip');
+  const W = 1680, H = 430, L = 96, R = 24, T = 24, B = 44, NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, at, txt) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; return e; };
+  const usd = v => v >= 1e6 ? `$${(v / 1e6).toFixed(2)}M` : v >= 1e3 ? `$${Math.round(v / 1000)}K` : `$${Math.round(v)}`;
+  const crashes = [[2000, 2002, 'Dot-com bust'], [2008, 2008, 'Financial crisis'], [2022, 2022, 'Rate hikes']];
+  let view = null;
+
+  function draw(n) {
+    const total = D.m.length / 12, y0 = D.y0 + total - n, k0 = (y0 - D.y0) * 12;
+    const m = D.m.slice(k0), put = m.map((_, k) => 300 * (k0 + k + 1));
+    const top = Math.max(...m), step = top > 400000 ? 200000 : top > 150000 ? 50000 : top > 60000 ? 20000 : 10000;
+    const ymax = Math.ceil(top * 1.08 / step) * step, base = k0 ? Math.floor(Math.min(...put, ...m) / step) * step : 0;
+    const sx = k => L + k / m.length * (W - L - R), sy = v => T + (1 - (v - base) / (ymax - base)) * (H - T - B);
+    svg.textContent = '';
+    for (let t = base; t <= ymax; t += step) {
+      svg.append(el('line', { class: 'grid', x1: L, x2: W - R, y1: sy(t), y2: sy(t) }));
+      svg.append(el('text', { class: 'ax', x: L - 14, y: sy(t) + 6, 'text-anchor': 'end' }, t ? usd(t) : '$0'));
+    }
+    for (let y = 0; y < n; y++) svg.append(el('text', { class: 'ax' + (n > 20 ? ' sm' : ''), x: sx(y * 12 + 6), y: H - 12, 'text-anchor': 'middle' }, n > 20 ? `'${String(y0 + y).slice(2)}` : y0 + y));
+    const pts = arr => arr.map((v, k) => `${k ? 'L' : 'M'}${sx(k + 1).toFixed(1)} ${sy(v).toFixed(1)}`).join(' ');
+    const bandsAt = svg.childNodes.length;
+    svg.append(el('path', { class: 'area', d: `M${sx(0)} ${sy(k0 ? m[0] : base)} ` + pts(m).replace(/^M/, 'L') + ` L${sx(m.length)} ${sy(base)} L${sx(0)} ${sy(base)} Z` }));
+    svg.append(el('path', { class: 'ln gry thin draw', pathLength: 1, style: '--d:.1s', d: pts(put) }));
+    svg.append(el('path', { class: 'ln tea draw', pathLength: 1, style: '--d:.2s', d: pts(m) }));
+    crashes.forEach(([a, b, lab]) => {
+      const k1 = Math.max(0, (a - y0) * 12), k2 = Math.min(m.length, (b - y0 + 1) * 12);
+      if (k2 <= 0 || k1 >= m.length) return;
+      const g = el('g', { class: 'fade' });
+      g.append(el('rect', { class: 'band', x: sx(k1), y: T, width: sx(k2) - sx(k1), height: H - B - T }));
+      let lo = k1; for (let k = k1; k < k2; k++) if (m[k] < m[lo]) lo = k;
+      g.append(el('circle', { class: 'pt rst', cx: sx(lo + 1), cy: sy(m[lo]), r: 7 }));
+      g.append(el('text', { class: 'an', x: (sx(k1) + sx(k2)) / 2, y: T + 26, 'text-anchor': 'middle' }, lab));
+      svg.append(g);
+    });
+    svg.querySelectorAll('g.fade').forEach(g => { if (g.querySelector('rect.band')) svg.insertBefore(g, svg.childNodes[bandsAt]); });
+    const guide = el('line', { class: 'guide', x1: 0, x2: 0, y1: T, y2: H - B }), dot = el('circle', { class: 'pt tea', r: 8, cx: -99, cy: -99 });
+    svg.append(guide, dot);
+    view = { m, put, sx, sy, y0, guide, dot };
+    box.querySelector('#dcrange').textContent = `${y0} to ${D.y0 + total - 1}`;
+  }
+
+  function hover(e) {
+    if (!view) return;
+    const p = svg.getBoundingClientRect(), x = ((e.touches ? e.touches[0].clientX : e.clientX) - p.left) / p.width * W;
+    const k = Math.max(0, Math.min(view.m.length - 1, Math.round((x - L) / (W - L - R) * view.m.length) - 1));
+    const gx = view.sx(k + 1), v = view.m[k], pin = view.put[k], yr = view.y0 + Math.floor(k / 12);
+    const mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][k % 12];
+    view.guide.setAttribute('x1', gx); view.guide.setAttribute('x2', gx); view.guide.classList.add('on');
+    view.dot.setAttribute('cx', gx); view.dot.setAttribute('cy', view.sy(v));
+    tip.innerHTML = `<b>${mon} ${yr}</b><span class="up">${usd(v)}</span><em>put in ${usd(pin)}</em>`;
+    tip.style.left = Math.min(88, Math.max(8, gx / W * 100)) + '%';
+    tip.classList.add('on');
+  }
+  function leave() { if (!view) return; view.guide.classList.remove('on'); view.dot.setAttribute('cx', -99); tip.classList.remove('on'); }
+  svg.addEventListener('mousemove', hover);
+  svg.addEventListener('touchmove', hover, { passive: true });
+  svg.addEventListener('mouseleave', leave);
+  box.querySelectorAll('.zoom button').forEach(b => b.addEventListener('click', () => {
+    box.querySelectorAll('.zoom button').forEach(x => x.classList.toggle('on', x === b));
+    leave(); draw(+b.dataset.n);
+  }));
+  draw(26);
+})();
+
+// time in the market: drop the N best days and redraw $10,000
+(function () {
+  const box = document.getElementById('tm');
+  if (!box) return;
+  const D = JSON.parse(box.dataset.tm), svg = document.getElementById('tmsvg'), tip = document.getElementById('tmtip');
+  const W = 1100, H = 440, L = 86, R = 20, T = 20, B = 40, NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, at, txt) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; return e; };
+  const usd = v => `$${Math.round(v).toLocaleString('en-US')}`;
+  const rank = D.r.map((r, i) => i).sort((a, b) => D.r[b] - D.r[a]);
+  const full = []; let v = 10000; D.r.forEach(r => { v *= 1 + r; full.push(v); });
+  const ymax = 35000, sx = i => L + i / (D.r.length - 1) * (W - L - R), sy = v => T + (1 - v / ymax) * (H - T - B);
+  const path = arr => arr.map((v, i) => `${i ? 'L' : 'M'}${sx(i).toFixed(1)} ${sy(v).toFixed(1)}`).join(' ');
+  let view = null;
+
+  function draw(k) {
+    const skip = new Set(rank.slice(0, k)), miss = []; let w = 10000;
+    D.r.forEach((r, i) => { if (!skip.has(i)) w *= 1 + r; miss.push(w); });
+    svg.textContent = '';
+    [0, 10000, 20000, 30000].forEach(t => {
+      svg.append(el('line', { class: 'grid', x1: L, x2: W - R, y1: sy(t), y2: sy(t) }));
+      svg.append(el('text', { class: 'ax', x: L - 12, y: sy(t) + 6, 'text-anchor': 'end' }, t ? `$${t / 1000}K` : '$0'));
+    });
+    svg.append(el('line', { class: 'ref', x1: L, x2: W - R, y1: sy(10000), y2: sy(10000) }));
+    let last = '';
+    D.d.forEach((d, i) => { const y = d.slice(0, 4); if (y !== last) { last = y; svg.append(el('text', { class: 'ax', x: sx(i) + 30, y: H - 10, 'text-anchor': 'middle' }, y)); } });
+    if (k) svg.append(el('path', { class: 'ln gry thin', d: path(full) }));
+    svg.append(el('path', { class: 'area', d: path(miss) + ` L${sx(miss.length - 1)} ${sy(0)} L${sx(0)} ${sy(0)} Z` }));
+    svg.append(el('path', { class: 'ln ' + (k ? 'rst' : 'tea') + ' draw', pathLength: 1, d: path(miss) }));
+    rank.slice(0, k).forEach((i, n) => svg.append(el('circle', { class: 'missed', cx: sx(i), cy: sy(full[i]), r: 6, style: `--n:${n}` })));
+    const guide = el('line', { class: 'guide', x1: 0, x2: 0, y1: T, y2: H - B });
+    svg.append(guide);
+    view = { miss, guide, skip };
+    const end = miss[miss.length - 1];
+    document.getElementById('tmval').textContent = usd(end);
+    document.getElementById('tmlab').textContent = k ? `Missed the ${k} best days` : 'Stayed invested the whole time';
+    document.getElementById('tmlost').textContent = usd(full[full.length - 1] - end);
+    box.querySelector('.readout').classList.toggle('bad', !!k);
+  }
+
+  function hover(e) {
+    if (!view) return;
+    const p = svg.getBoundingClientRect(), x = ((e.touches ? e.touches[0].clientX : e.clientX) - p.left) / p.width * W;
+    const i = Math.max(0, Math.min(D.r.length - 1, Math.round((x - L) / (W - L - R) * (D.r.length - 1))));
+    view.guide.setAttribute('x1', sx(i)); view.guide.setAttribute('x2', sx(i)); view.guide.classList.add('on');
+    const r = D.r[i], dt = new Date(D.d[i] + 'T12:00:00');
+    tip.innerHTML = `<b>${dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</b><span class="${r >= 0 ? 'up' : 'dn'}">${r >= 0 ? '+' : ''}${(r * 100).toFixed(2)}% that day</span><em>${usd(view.miss[i])}</em>${view.skip.has(i) ? '<i>missed</i>' : ''}`;
+    tip.style.left = Math.min(86, Math.max(10, sx(i) / W * 100)) + '%';
+    tip.classList.add('on');
+  }
+  svg.addEventListener('mousemove', hover);
+  svg.addEventListener('touchmove', hover, { passive: true });
+  svg.addEventListener('mouseleave', () => { if (view) view.guide.classList.remove('on'); tip.classList.remove('on'); });
+  box.querySelectorAll('.zoom button').forEach(b => b.addEventListener('click', () => {
+    box.querySelectorAll('.zoom button').forEach(x => x.classList.toggle('on', x === b));
+    draw(+b.dataset.k);
+  }));
+  draw(0);
+})();
+
+// stayed invested vs. sold low, bought high (40 years, yearly)
+(function () {
+  const box = document.getElementById('tl');
+  if (!box) return;
+  const D = JSON.parse(box.dataset.tl), svg = document.getElementById('tlsvg'), tip = document.getElementById('tltip');
+  const W = 1100, H = 420, L = 86, R = 24, T = 16, B = 40, NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, at, txt) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; return e; };
+  const usd = v => v >= 1e6 ? `$${(v / 1e6).toFixed(2)}M` : `$${Math.round(v / 1000)}K`;
+  const n = D.y.length, ymax = 350000;
+  const sx = i => L + i / (n - 1) * (W - L - R), sy = v => T + (1 - v / ymax) * (H - T - B);
+  const path = arr => arr.map((v, i) => `${i ? 'L' : 'M'}${sx(i).toFixed(1)} ${sy(v).toFixed(1)}`).join(' ');
+  let guide;
+
+  function draw(mode) {
+    svg.textContent = '';
+    if (mode !== 'a') D.out.forEach(y => { const i = D.y.indexOf(y); svg.append(el('rect', { class: 'cash fade', x: sx(i - 1), y: T, width: sx(i) - sx(i - 1), height: H - T - B })); });
+    [0, 100000, 200000, 300000].forEach(t => {
+      svg.append(el('line', { class: 'grid', x1: L, x2: W - R, y1: sy(t), y2: sy(t) }));
+      svg.append(el('text', { class: 'ax', x: L - 12, y: sy(t) + 6, 'text-anchor': 'end' }, t ? `$${t / 1000}K` : '$0'));
+    });
+    D.y.forEach((y, i) => { if (y % 5 === 0) svg.append(el('text', { class: 'ax', x: sx(i), y: H - 10, 'text-anchor': 'middle' }, y)); });
+    if (mode !== 'b') {
+      svg.append(el('path', { class: 'area', d: path(D.a) + ` L${sx(n - 1)} ${sy(0)} L${sx(0)} ${sy(0)} Z` }));
+      svg.append(el('path', { class: 'ln tea draw', pathLength: 1, d: path(D.a) }));
+      svg.append(el('circle', { class: 'pt tea', cx: sx(n - 1), cy: sy(D.a[n - 1]), r: 8 }));
+    }
+    if (mode !== 'a') {
+      svg.append(el('path', { class: 'ln rst draw', pathLength: 1, style: '--d:.25s', d: path(D.b) }));
+      svg.append(el('circle', { class: 'pt rst', cx: sx(n - 1), cy: sy(D.b[n - 1]), r: 8 }));
+    }
+    guide = el('line', { class: 'guide', x1: 0, x2: 0, y1: T, y2: H - B });
+    svg.append(guide);
+    box.querySelector('.ra').classList.toggle('dim', mode === 'b');
+    box.querySelector('.rb').classList.toggle('show', mode !== 'a');
+  }
+
+  function hover(e) {
+    const p = svg.getBoundingClientRect(), x = ((e.touches ? e.touches[0].clientX : e.clientX) - p.left) / p.width * W;
+    const i = Math.max(1, Math.min(n - 1, Math.round((x - L) / (W - L - R) * (n - 1))));
+    guide.setAttribute('x1', sx(i)); guide.setAttribute('x2', sx(i)); guide.classList.add('on');
+    const y = D.y[i], r = D.r[i - 1], cash = D.out.includes(y);
+    tip.innerHTML = `<b>${y}</b><span class="${r >= 0 ? 'up' : 'dn'}">${r >= 0 ? '+' : ''}${r.toFixed(1)}%</span><em>Stayed ${usd(D.a[i])}</em><em class="dn">Timer ${usd(D.b[i])}</em>${cash ? '<i>in cash</i>' : ''}`;
+    tip.style.left = Math.min(84, Math.max(12, sx(i) / W * 100)) + '%';
+    tip.classList.add('on');
+  }
+  svg.addEventListener('mousemove', hover);
+  svg.addEventListener('touchmove', hover, { passive: true });
+  svg.addEventListener('mouseleave', () => { guide.classList.remove('on'); tip.classList.remove('on'); });
+  box.querySelectorAll('.zoom button').forEach(b => b.addEventListener('click', () => {
+    box.querySelectorAll('.zoom button').forEach(x => x.classList.toggle('on', x === b));
+    draw(b.dataset.v);
+  }));
+  draw('a');
+})();
+
+function fit() {
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  stage.style.transform = `translate(${(innerWidth - 1920 * s) / 2}px,${(innerHeight - 1080 * s) / 2}px) scale(${s})`;
+}
+
+function go(n) {
+  n = Math.max(0, Math.min(slides.length - 1, n));
+  if (n === idx) return;
+  const prev = slides[idx];
+  stage.classList.toggle('back', n < idx);
+  if (prev) { prev.classList.remove('active'); prev.classList.add('leaving'); setTimeout(() => prev.classList.remove('leaving'), 1000); }
+  idx = n;
+  const s = slides[idx];
+  s.classList.remove('leaving'); s.classList.add('active');
+  root.style.setProperty('--p', (idx / (slides.length - 1)).toFixed(3));
+  bar.style.width = ((idx + 1) / slides.length * 100) + '%';
+  history.replaceState(null, '', '#' + (idx + 1));
+  countUp(s);
+}
+
+addEventListener('resize', fit);
+addEventListener('mousemove', e => {
+  root.style.setProperty('--mx', (e.clientX / innerWidth - .5) * 2);
+  root.style.setProperty('--my', (e.clientY / innerHeight - .5) * 2);
+});
+addEventListener('keydown', e => {
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); go(idx + 1); }
+  else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); go(idx - 1); }
+  else if (e.key === 'Home') go(0);
+  else if (e.key === 'End') go(slides.length - 1);
+  else if (e.key === 'f' || e.key === 'F') document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen();
+});
+addEventListener('click', e => { if (e.target.closest('.int')) return; go(idx + (e.clientX > innerWidth / 3 ? 1 : -1)); });
+let tx = null;
+addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+addEventListener('touchend', e => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1));
+  tx = null;
+});
+
+fit();
+go((parseInt(location.hash.slice(1)) || 1) - 1);
+</script></body></html>
